@@ -19,6 +19,8 @@
   # Define on which hard drive you want to install Grub.
   boot.loader.grub.device = "/dev/sda";
 
+  boot.initrd.luks.devices = [ { device = "/dev/sda2"; name = "crypted"; } ];
+
   networking.hostName = "eeenix"; # Define your hostname.
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
