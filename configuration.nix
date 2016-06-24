@@ -105,7 +105,7 @@
     enable = true;
     user = "kai";
   };
-  
+
 
   services.xserver = {
     # Enable the X11 windowing system.
@@ -118,6 +118,11 @@
     # Enable the Window Manager.
     #displayManager.gdm.enable = true;
     #desktopManager.gnome3.enable = true;
+    displayManager.slim = {
+      enable = true;
+      defaultUser = "kai";
+      autoLogin = true;
+    };
     desktopManager.default = "none";
     windowManager.xmonad.enable = true;
     windowManager.xmonad.enableContribAndExtras = true;
