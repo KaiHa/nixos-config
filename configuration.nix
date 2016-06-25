@@ -50,6 +50,7 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    byobu
     ccid
     dmenu
     emacs
@@ -67,6 +68,7 @@
     python35Packages.powerline
     rxvt_unicode
     sysdig
+    tmux
     tree
     urxvt_font_size
     usermount
