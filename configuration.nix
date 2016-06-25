@@ -50,7 +50,6 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    bashCompletion
     ccid
     dmenu
     emacs
@@ -76,7 +75,6 @@
     wireshark
     xcompmgr
     xorg.xev
-    zsh
     (pkgs.haskellPackages.ghcWithPackages (self: [
       self.MissingH
       self.cabal-install
@@ -87,6 +85,11 @@
       self.xmonad-extras
     ]))
   ];
+
+  programs = {
+    bash.enableCompletion = true;
+    zsh.enable = true;
+  };
 
 #  security.sudo.configFile =
 #    ''
