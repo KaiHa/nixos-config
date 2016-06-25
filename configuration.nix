@@ -62,6 +62,7 @@
     gmrun
     gnupg
     mutt-with-sidebar
+    pass
     pcsclite
     psmisc
     python35Packages.powerline
@@ -69,6 +70,7 @@
     sysdig
     tree
     urxvt_font_size
+    usermount
     vim
     w3m
     wireshark
