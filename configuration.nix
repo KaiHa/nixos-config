@@ -65,12 +65,11 @@
     pass
     pcsclite
     psmisc
-    python35Packages.powerline
-    rxvt_unicode
+    python35
+    rxvt_unicode-with-plugins
     sysdig
     tmux
     tree
-    urxvt_font_size
     usermount
     vim
     w3m
