@@ -122,6 +122,7 @@
     # services.xserver.xkbOptions = "eurosign:e";
     synaptics.enable = true;
     synaptics.twoFingerScroll = true;
+    synaptics.tapButtons = false;
 
     # Enable the Window Manager.
     #displayManager.gdm.enable = true;
