@@ -25,11 +25,14 @@
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Select internationalisation properties.
-  # i18n = {
-  #   consoleFont = "Lat2-Terminus16";
-  #   consoleKeyMap = "us";
-  #   defaultLocale = "en_US.UTF-8";
-  # };
+  i18n = {
+    consoleFont = "Lat2-Terminus16";
+    consoleKeyMap = "us";
+    defaultLocale = "en_US.UTF-8";
+    consoleColors = [ "002b36" "dc322f" "859900" "b58900" "268bd2" "d33682"
+                      "2aa198" "eee8d5" "002b36" "cb4b16" "586e75" "657b83"
+                      "839496" "6c71c4" "93a1a1" "fdf6e3" ];
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
