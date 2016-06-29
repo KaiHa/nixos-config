@@ -70,6 +70,7 @@
     sysdig
     tmux
     tree
+    unzip
     usermount
     vim
     w3m
