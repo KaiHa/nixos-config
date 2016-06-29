@@ -25,11 +25,14 @@
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Select internationalisation properties.
-  # i18n = {
-  #   consoleFont = "Lat2-Terminus16";
-  #   consoleKeyMap = "us";
-  #   defaultLocale = "en_US.UTF-8";
-  # };
+  i18n = {
+    consoleFont = "Lat2-Terminus16";
+    consoleKeyMap = "us";
+    defaultLocale = "en_US.UTF-8";
+    consoleColors = [ "002b36" "dc322f" "859900" "b58900" "268bd2" "d33682"
+                      "2aa198" "eee8d5" "002b36" "cb4b16" "586e75" "657b83"
+                      "839496" "6c71c4" "93a1a1" "fdf6e3" ];
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
@@ -50,6 +53,7 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    byobu
     ccid
     dmenu
     emacs
@@ -64,11 +68,12 @@
     pass
     pcsclite
     psmisc
-    python35Packages.powerline
-    rxvt_unicode
+    python35
+    rxvt_unicode-with-plugins
     sysdig
+    tmux
     tree
-    urxvt_font_size
+    unzip
     usermount
     vim
     w3m
@@ -121,6 +126,7 @@
     # services.xserver.xkbOptions = "eurosign:e";
     synaptics.enable = true;
     synaptics.twoFingerScroll = true;
+    synaptics.tapButtons = false;
 
     # Enable the Window Manager.
     #displayManager.gdm.enable = true;
