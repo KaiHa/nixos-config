@@ -44,6 +44,7 @@
       corefonts
       hack-font
       inconsolata
+      liberation_ttf
       powerline-fonts
       ubuntu_font_family
       unifont
@@ -63,6 +64,7 @@
     fontconfig
     git
     gmrun
+    gnumake
     gnupg
     mutt-with-sidebar
     pass
@@ -70,6 +72,7 @@
     psmisc
     python35
     rxvt_unicode-with-plugins
+    stalonetray
     sysdig
     tmux
     tree
