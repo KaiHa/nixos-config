@@ -65,7 +65,7 @@
     git
     gmrun
     gnumake
-    gnupg
+    gnupg21
     mutt-with-sidebar
     pass
     pcsclite
@@ -77,6 +77,7 @@
     tmux
     tree
     unzip
+    usbutils
     usermount
     vim
     w3m
