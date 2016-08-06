@@ -55,7 +55,6 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     byobu
-    ccid
     dmenu
     emacs
     feh
@@ -66,9 +65,13 @@
     gmrun
     gnumake
     gnupg21
+    meld
     mutt-with-sidebar
+    nitrokey-app
+    nix-prefetch-scripts
+    nix-repl
+    pandoc
     pass
-    pcsclite
     psmisc
     python35
     rxvt_unicode-with-plugins
@@ -181,5 +184,7 @@
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "16.03";
+
+  nix.useChroot = true;
 
 }
