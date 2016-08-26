@@ -54,6 +54,7 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    aspellDicts.de
     byobu
     dmenu
     emacs
@@ -66,6 +67,7 @@
     gnumake
     gnupg21
     meld
+    mupdf
     mutt-with-sidebar
     nitrokey-app
     nix-prefetch-scripts
@@ -118,7 +120,10 @@
   };
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    gutenprint = true;
+  };
 
   services.physlock = {
     enable = true;
