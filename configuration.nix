@@ -54,9 +54,12 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    aspell
     aspellDicts.de
+    aspellDicts.en
     byobu
     dmenu
+    dstat
     emacs
     feh
     file
@@ -66,6 +69,7 @@
     gmrun
     gnumake
     gnupg21
+    linuxPackages.perf
     meld
     mupdf
     mutt-with-sidebar
@@ -104,11 +108,6 @@
     bash.enableCompletion = true;
     zsh.enable = true;
   };
-
-#  security.sudo.configFile =
-#    ''
-#      kai  ALL=(ALL:ALL) ALL
-#    '';
 
   # List services that you want to enable:
 
@@ -153,6 +152,25 @@
     windowManager.xmonad.enableContribAndExtras = true;
     windowManager.xmonad.extraPackages = self: [ self.MissingH ];
     windowManager.default = "xmonad";
+  };
+
+  systemd.user.services.emacs = {
+    description = "Emacs Daemon";
+    environment = {
+      GTK_DATA_PREFIX = config.system.path;
+      SSH_AUTH_SOCK = "/home/kai/.gnupg/S.gpg-agent.ssh";
+      GTK_PATH = "${config.system.path}/lib/gtk-3.0:${config.system.path}/lib/gtk-2.0";
+      NIX_PROFILES = "${pkgs.lib.concatStringsSep " " config.environment.profiles}";
+      TERMINFO_DIRS = "/run/current-system/sw/share/terminfo";
+      ASPELL_CONF = "dict-dir /run/current-system/sw/lib/aspell";
+    };
+    serviceConfig = {
+      Type = "forking";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'source ${config.system.build.setEnvironment}; exec emacs --daemon'";
+      ExecStop = "${pkgs.emacs}/bin/emacsclient --eval (kill-emacs)";
+      Restart = "always";
+    };
+    wantedBy = [ "default.target" ];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
