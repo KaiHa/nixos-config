@@ -22,6 +22,11 @@
       fsType = "ext4";
     };
 
+  fileSystems."/home/kai/sw" =
+    { device = "/dev/disk/by-label/home_sw";
+      fsType = "ext4";
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-label/swap"; }
     ];
