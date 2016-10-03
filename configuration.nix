@@ -14,7 +14,7 @@
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
-  boot.loader.grub.timeout = 2;
+  boot.loader.timeout = 2;
   boot.loader.grub.version = 2;
   # Define on which hard drive you want to install Grub.
   boot.loader.grub.device = "/dev/sda";
@@ -37,6 +37,10 @@
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
+
   fonts = {
     enableFontDir = true;
     enableGhostscriptFonts = true;
@@ -54,9 +58,11 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    (mutt.override { withSidebar = true; withTrash = true; })
     aspell
     aspellDicts.de
     aspellDicts.en
+    binutils
     byobu
     dmenu
     dstat
@@ -70,9 +76,10 @@
     gnumake
     gnupg21
     linuxPackages.perf
+    mc
     meld
     mupdf
-    mutt-with-sidebar
+    mutt
     nitrokey-app
     nix-prefetch-scripts
     nix-repl
@@ -208,6 +215,6 @@
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "16.03";
 
-  nix.useChroot = true;
+  nix.useSandbox = true;
 
 }
