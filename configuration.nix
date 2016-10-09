@@ -80,13 +80,17 @@
     meld
     mupdf
     mutt
+    nethogs
     nitrokey-app
     nix-prefetch-scripts
     nix-repl
     pandoc
+    parted
     pass
     psmisc
+    pwgen
     python35
+    rsync
     rxvt_unicode-with-plugins
     stalonetray
     sysdig
@@ -100,10 +104,10 @@
     wireshark
     xcompmgr
     xorg.xev
+    xorg.xmessage
     (pkgs.haskellPackages.ghcWithPackages (self: [
       self.MissingH
       self.cabal-install
-      self.stack
       self.xmobar
       self.xmonad
       self.xmonad-contrib
