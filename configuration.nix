@@ -106,6 +106,7 @@
     usbutils
     usermount
     vim
+    weechat
     w3m
     wireshark
     xcompmgr
