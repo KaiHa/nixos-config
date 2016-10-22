@@ -22,7 +22,10 @@
   boot.initrd.luks.devices = [ { device = "/dev/sda2"; name = "crypted"; } ];
 
   networking.hostName = "eeenix"; # Define your hostname.
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.networkmanager = {
+    enable = true;
+  };
+  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Select internationalisation properties.
   i18n = {
@@ -72,9 +75,10 @@
     firefox
     fontconfig
     git
+    gitAndTools.gitFull
     gmrun
     gnumake
-    gnupg21
+    gnupg
     linuxPackages.perf
     mc
     meld
@@ -87,12 +91,14 @@
     pandoc
     parted
     pass
+    pciutils
     psmisc
     pwgen
     python35
     rsync
     rxvt_unicode-with-plugins
     stalonetray
+    stdenv
     sysdig
     tmux
     tree
@@ -107,7 +113,13 @@
     xorg.xmessage
     (pkgs.haskellPackages.ghcWithPackages (self: [
       self.MissingH
+      self.alex
+      self.brick
       self.cabal-install
+      self.ghc-mod
+      self.happy
+      self.hlint
+      self.shelly
       self.xmobar
       self.xmonad
       self.xmonad-contrib
@@ -117,6 +129,7 @@
 
   programs = {
     bash.enableCompletion = true;
+    ssh.startAgent = false;
     zsh.enable = true;
   };
 
@@ -184,12 +197,22 @@
     wantedBy = [ "default.target" ];
   };
 
+  systemd.services.wwan = {
+    description = "Start ModemManager";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.dbus}/bin/dbus-send --system --print-reply --reply-timeout=120000 --type=method_call --dest='org.freedesktop.ModemManager1' '/org/freedesktop/ModemManager1' org.freedesktop.ModemManager1.ScanDevices";
+    };
+    wantedBy = [ "default.target" ];
+    after = [ "network-manager.service" ];
+  };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.kai = {
     isNormalUser = true;
     uid = 1000;
     shell = "/run/current-system/sw/bin/zsh";
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "networkmanager" ];
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCKeT9XLuhzUU4k4gd8URDS3gQIZemTqXSvlVy5nYXJ4gMfJ0sYVMrI9KBBU2Ukkb0Cl8Rmfzblf1iE6IUMrat4Cb9RGIbzjiAzC2XaLUsDC5W87Qv5bgV0t83nWQFjWPWy38Ybjcp8+WuvJNaX9ECc8t+xwtUdVNZ5TszblEqE5wKfOAqJZNGO8uwX2ZY7hOLr9C9a/AM74ouHqR7iDaujMNdLuOA6XmHAnWI6aiA6Lu3NOpGO6UXIudUCIUQ+ymSCCfu99xaAs5aXw/XQLS2f8W8C4q45m/V+uozdqYOK2wrFQlhFa/7TZwi5s3XPeG0d7t5HnxymSIHO7HudP0E7 cardno:00050000351F" ];
   };
@@ -217,7 +240,7 @@
   '';
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "16.03";
+  system.stateVersion = "16.09";
 
   nix.useSandbox = true;
 
