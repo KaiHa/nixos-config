@@ -106,6 +106,7 @@
     usbutils
     usermount
     vim
+    vnstat
     weechat
     w3m
     wireshark
@@ -154,6 +155,7 @@
     user = "kai";
   };
 
+  services.vnstat.enable = true;
 
   services.xserver = {
     # Enable the X11 windowing system.
