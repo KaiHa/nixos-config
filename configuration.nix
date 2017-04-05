@@ -14,6 +14,7 @@
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
+  boot.loader.grub.memtest86.enable = true;
   boot.loader.timeout = 2;
   boot.loader.grub.version = 2;
   # Define on which hard drive you want to install Grub.
@@ -32,7 +33,7 @@
     consoleFont = "Lat2-Terminus16";
     consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
-    consoleColors = [ "002b36" "dc322f" "859900" "b58900" "268bd2" "d33682"
+    consoleColors = [ "000000" "dc322f" "859900" "b58900" "268bd2" "d33682"
                       "2aa198" "eee8d5" "002b36" "cb4b16" "586e75" "657b83"
                       "839496" "6c71c4" "93a1a1" "fdf6e3" ];
   };
@@ -67,6 +68,7 @@
     aspellDicts.en
     binutils
     byobu
+    dfu-programmer
     dmenu
     dstat
     emacs
@@ -106,6 +108,8 @@
     usbutils
     usermount
     vim
+    vnstat
+    weechat
     w3m
     wireshark
     xcompmgr
@@ -153,6 +157,7 @@
     user = "kai";
   };
 
+  services.vnstat.enable = true;
 
   services.xserver = {
     # Enable the X11 windowing system.
