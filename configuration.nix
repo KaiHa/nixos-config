@@ -14,6 +14,7 @@
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
+  boot.loader.grub.memtest86.enable = true;
   boot.loader.timeout = 2;
   boot.loader.grub.version = 2;
   # Define on which hard drive you want to install Grub.
@@ -67,6 +68,7 @@
     aspellDicts.en
     binutils
     byobu
+    dfu-programmer
     dmenu
     dstat
     emacs
