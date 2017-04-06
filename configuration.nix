@@ -10,23 +10,51 @@
       ./hardware-configuration.nix
     ];
 
-  boot.extraModulePackages = [ pkgs.linuxPackages.sysdig ];
+  hardware.bluetooth.enable = true;
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
   boot.loader.grub.memtest86.enable = true;
   boot.loader.timeout = 2;
   boot.loader.grub.version = 2;
+  #boot.loader.grub.efiSupport = true;
+  #boot.loader.grub.efiInstallAsRemovable = true;
+  #boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  #boot.loader.efi.canTouchEfiVariables = true;
   # Define on which hard drive you want to install Grub.
   boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.extraFiles = { "memdisk" = "${pkgs.syslinux}/share/syslinux/memdisk"; };
+  boot.loader.grub.extraEntries = ''
+    menuentry "Bootable ISO Image: Debian Jessie" {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        linux16 /memdisk iso
+        initrd16 /images/jessie.iso
+    }
+    menuentry "Bootable ISO Image: Debian Stretch" {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        linux16 /memdisk iso
+        initrd16 /images/stretch.iso
+    }
+    menuentry "Bootable ISO Image: Tails" {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        linux16 /memdisk iso
+        initrd16 /images/tails.iso
+    }
+    '';
 
-  boot.initrd.luks.devices = [ { device = "/dev/sda2"; name = "crypted"; } ];
 
-  networking.hostName = "eeenix"; # Define your hostname.
-  networking.networkmanager = {
-    enable = true;
-  };
-  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  boot.initrd.luks.devices."crypt".allowDiscards = true;
+
+  fileSystems."/".options = ["noatime" "nodiratime" "discard"];
+
+  networking.hostName = "nix230";
+  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Select internationalisation properties.
   i18n = {
@@ -62,16 +90,19 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    (mutt.override { withSidebar = true; withTrash = true; })
+    (mutt.override { withSidebar = true; })
     aspell
     aspellDicts.de
     aspellDicts.en
     binutils
+    blueman
     byobu
+    debootstrap
     dfu-programmer
     dmenu
     dstat
     emacs
+    evince
     feh
     file
     firefox
@@ -102,6 +133,7 @@
     stalonetray
     stdenv
     sysdig
+    syslinux
     tmux
     tree
     unzip
@@ -112,6 +144,7 @@
     weechat
     w3m
     wireshark
+    xorg.xbacklight
     xcompmgr
     xorg.xev
     xorg.xmessage
@@ -152,10 +185,7 @@
     gutenprint = true;
   };
 
-  services.physlock = {
-    enable = true;
-    user = "kai";
-  };
+  services.physlock = { enable = true; };
 
   services.vnstat.enable = true;
 
@@ -175,6 +205,10 @@
       enable = true;
       defaultUser = "kai";
       autoLogin = true;
+      extraConfig = ''
+        sessionstart_cmd    ${pkgs.xorg.sessreg}/bin/sessreg -a -l tty7 %user
+        sessionstop_cmd     ${pkgs.xorg.sessreg}/bin/sessreg -d -l tty7 %user
+      '';
     };
     desktopManager.default = "none";
     windowManager.xmonad.enable = true;
@@ -244,9 +278,16 @@
     LABEL="gnupg_rules_end"
   '';
 
-  # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "16.09";
+
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
 
   nix.useSandbox = true;
+
+  # The NixOS release to be compatible with for stateful data such as databases.
+  system.stateVersion = "17.03";
 
 }
