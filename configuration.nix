@@ -12,17 +12,20 @@
 
   hardware.bluetooth.enable = true;
 
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
   boot.loader.grub.memtest86.enable = true;
   boot.loader.timeout = 2;
   boot.loader.grub.version = 2;
-  #boot.loader.grub.efiSupport = true;
+  boot.loader.grub.efiSupport = true;
   #boot.loader.grub.efiInstallAsRemovable = true;
   #boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  #boot.loader.efi.canTouchEfiVariables = true;
   # Define on which hard drive you want to install Grub.
-  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.device = "nodev";
   boot.loader.grub.extraFiles = { "memdisk" = "${pkgs.syslinux}/share/syslinux/memdisk"; };
   boot.loader.grub.extraEntries = ''
     menuentry "Bootable ISO Image: Debian Jessie" {
