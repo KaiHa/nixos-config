@@ -17,12 +17,12 @@
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/sda1";
-      fsType = "ext4";
-    };
-
   boot.initrd.luks.devices."crypt".device = "/dev/disk/by-uuid/949a0af8-afd4-44c2-bf46-a06cb05325f5";
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/6A6B-B6D7";
+      fsType = "vfat";
+    };
 
   swapDevices = [ ];
 
