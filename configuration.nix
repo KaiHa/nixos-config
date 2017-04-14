@@ -15,42 +15,42 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.memtest86.enable = true;
   boot.loader.timeout = 2;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.efiSupport = true;
-  #boot.loader.grub.efiInstallAsRemovable = true;
-  #boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  # Define on which hard drive you want to install Grub.
-  boot.loader.grub.device = "nodev";
-  boot.loader.grub.extraFiles = { "memdisk" = "${pkgs.syslinux}/share/syslinux/memdisk"; };
-  boot.loader.grub.extraEntries = ''
-    menuentry "Bootable ISO Image: Debian Jessie" {
-        insmod part_msdos
-        insmod ext2
-        set root='hd0,msdos1'
-        linux16 /memdisk iso
-        initrd16 /images/jessie.iso
-    }
-    menuentry "Bootable ISO Image: Debian Stretch" {
-        insmod part_msdos
-        insmod ext2
-        set root='hd0,msdos1'
-        linux16 /memdisk iso
-        initrd16 /images/stretch.iso
-    }
-    menuentry "Bootable ISO Image: Tails" {
-        insmod part_msdos
-        insmod ext2
-        set root='hd0,msdos1'
-        linux16 /memdisk iso
-        initrd16 /images/tails.iso
-    }
-    '';
 
+  # GRUB was only enabled to create a legacy boot option to boot
+  # from ISO images. If GRUB is enabled, then systemd-boot is not
+  # updated. Therfore do not enable it permanently.
+  boot.loader.grub = {
+    #enable = true;
+    memtest86.enable = true;
+    version = 2;
+    #efiSupport = true;
+    device = "/dev/sda";
+    extraFiles = { "memdisk" = "${pkgs.syslinux}/share/syslinux/memdisk"; };
+    extraEntries = ''
+      menuentry "Bootable ISO Image: Debian Jessie" {
+          insmod part_gpt
+          insmod fat
+          set root='hd0,1'
+          linux16 /memdisk iso
+          initrd16 /images/jessie.iso
+      }
+      menuentry "Bootable ISO Image: Debian Stretch" {
+          insmod part_gpt
+          insmod fat
+          set root='hd0,1'
+          linux16 /memdisk iso
+          initrd16 /images/stretch.iso
+      }
+      menuentry "Bootable ISO Image: Tails" {
+          insmod part_gpt
+          insmod fat
+          set root='hd0,1'
+          linux16 /memdisk iso
+          initrd16 /images/tails.iso
+      }
+      '';
+  };
 
   boot.initrd.luks.devices."crypt".allowDiscards = true;
 
@@ -116,6 +116,7 @@
     gmrun
     gnumake
     gnupg
+    gparted
     linuxPackages.perf
     mc
     meld
