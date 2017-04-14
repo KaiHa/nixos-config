@@ -104,6 +104,7 @@
     dfu-programmer
     dmenu
     dstat
+    efibootmgr
     emacs
     evince
     feh
