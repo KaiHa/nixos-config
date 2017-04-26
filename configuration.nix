@@ -10,6 +10,20 @@
       ./hardware-configuration.nix
     ];
 
+  systemd.mounts = [
+    { where = "/media/nas";
+      what = "//fritz.box/FRITZ.NAS/NAS";
+      type = "cifs";
+      options = "credentials=/etc/.cifs-cred,iocharset=utf8,uid=1000,noauto,_netdev";
+      after = ["network-online.target" "wpa_supplicant.service"];
+      requires = ["network-online.target" "wpa_supplicant.service"]; }
+  ];
+
+  systemd.automounts = [
+    { wantedBy = ["multi-user.target"];
+      where = "/media/nas"; }
+  ];
+
   hardware.bluetooth.enable = true;
 
   # Use the systemd-boot EFI boot loader.
@@ -49,7 +63,7 @@
 
   boot.initrd.luks.devices."crypt".allowDiscards = true;
 
-  fileSystems."/".options = ["noatime" "nodiratime" "discard"];
+  fileSystems."/".options = ["defaults" "noatime" "nodiratime" "discard"];
 
   networking.hostName = "nix230";
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -95,6 +109,7 @@
     binutils
     blueman
     byobu
+    cifs-utils
     debootstrap
     dfu-programmer
     dmenu
@@ -236,15 +251,16 @@
     wantedBy = [ "default.target" ];
   };
 
-  systemd.services.wwan = {
-    description = "Start ModemManager";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.dbus}/bin/dbus-send --system --print-reply --reply-timeout=120000 --type=method_call --dest='org.freedesktop.ModemManager1' '/org/freedesktop/ModemManager1' org.freedesktop.ModemManager1.ScanDevices";
-    };
-    wantedBy = [ "default.target" ];
-    after = [ "network-manager.service" ];
-  };
+### modemmanager is not yet needed
+#  systemd.services.wwan = {
+#    description = "Start ModemManager";
+#    serviceConfig = {
+#      Type = "oneshot";
+#      ExecStart = "${pkgs.dbus}/bin/dbus-send --system --print-reply --reply-timeout=120000 --type=method_call --dest='org.freedesktop.ModemManager1' '/org/freedesktop/ModemManager1' org.freedesktop.ModemManager1.ScanDevices";
+#    };
+#    wantedBy = [ "default.target" ];
+#    after = [ "network-manager.service" ];
+#  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.kai = {
