@@ -145,6 +145,7 @@
     python35
     rsync
     rxvt_unicode-with-plugins
+    shotwell
     stalonetray
     stdenv
     sysdig
