@@ -164,19 +164,19 @@
     xcompmgr
     xorg.xev
     xorg.xmessage
-    (pkgs.haskellPackages.ghcWithPackages (self: [
-      self.MissingH
-      self.alex
-      self.brick
-      self.cabal-install
-      self.ghc-mod
-      self.happy
-      self.hlint
-      self.shelly
-      self.xmobar
-      self.xmonad
-      self.xmonad-contrib
-      self.xmonad-extras
+    (pkgs.haskellPackages.ghcWithHoogle (self: with self; [
+      MissingH
+      alex
+      cabal-install
+      ghc-mod
+      happy
+      hlint
+      hmatrix
+      xmobar
+      xmonad
+      xmonad-contrib
+      xmonad-extras
+      zlib
     ]))
   ];
 
