@@ -30,7 +30,7 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 2;
+  boot.loader.timeout = 60;
 
   # GRUB was only enabled to create a legacy boot option to boot
   # from ISO images. If GRUB is enabled, then systemd-boot is not
@@ -39,6 +39,7 @@
     #enable = true;
     memtest86.enable = true;
     version = 2;
+    default = 1;
     efiSupport = true;
     device = "/dev/sda";
     extraFiles = { "memdisk" = "${pkgs.syslinux}/share/syslinux/memdisk"; };
