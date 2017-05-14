@@ -25,6 +25,7 @@
   ];
 
   hardware.bluetooth.enable = true;
+  hardware.pulseaudio.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -109,6 +110,7 @@
     binutils
     blueman
     byobu
+    cdrkit
     cifs-utils
     debootstrap
     dfu-programmer
@@ -121,6 +123,7 @@
     file
     firefox
     fontconfig
+    gimp
     git
     gitAndTools.gitFull
     gmrun
@@ -139,6 +142,7 @@
     pandoc
     parted
     pass
+    pavucontrol
     pciutils
     psmisc
     pwgen
@@ -168,6 +172,7 @@
       MissingH
       alex
       cabal-install
+      doctest
       ghc-mod
       happy
       hlint
