@@ -243,7 +243,7 @@
     description = "Emacs Daemon";
     environment = {
       GTK_DATA_PREFIX = config.system.path;
-      SSH_AUTH_SOCK = "/home/kai/.gnupg/S.gpg-agent.ssh";
+      SSH_AUTH_SOCK = "/run/user/1000/gnupg/S.gpg-agent.ssh";
       GTK_PATH = "${config.system.path}/lib/gtk-3.0:${config.system.path}/lib/gtk-2.0";
       NIX_PROFILES = "${pkgs.lib.concatStringsSep " " config.environment.profiles}";
       TERMINFO_DIRS = "/run/current-system/sw/share/terminfo";
