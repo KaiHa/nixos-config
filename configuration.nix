@@ -26,6 +26,7 @@
 
   hardware.bluetooth.enable = true;
   hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
