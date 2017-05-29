@@ -25,6 +25,7 @@
   ];
 
   hardware.bluetooth.enable = true;
+  hardware.nitrokey.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
@@ -275,33 +276,10 @@
     isNormalUser = true;
     uid = 1000;
     shell = "/run/current-system/sw/bin/zsh";
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "nitrokey" ];
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCKeT9XLuhzUU4k4gd8URDS3gQIZemTqXSvlVy5nYXJ4gMfJ0sYVMrI9KBBU2Ukkb0Cl8Rmfzblf1iE6IUMrat4Cb9RGIbzjiAzC2XaLUsDC5W87Qv5bgV0t83nWQFjWPWy38Ybjcp8+WuvJNaX9ECc8t+xwtUdVNZ5TszblEqE5wKfOAqJZNGO8uwX2ZY7hOLr9C9a/AM74ouHqR7iDaujMNdLuOA6XmHAnWI6aiA6Lu3NOpGO6UXIudUCIUQ+ymSCCfu99xaAs5aXw/XQLS2f8W8C4q45m/V+uozdqYOK2wrFQlhFa/7TZwi5s3XPeG0d7t5HnxymSIHO7HudP0E7 cardno:00050000351F" ];
   };
-
-  services.udev.extraRules = ''
-    # Nitrokey U2F
-    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0664", GROUP="wheel", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="f1d0"
-    
-    SUBSYSTEM!="usb", GOTO="gnupg_rules_end"
-    ACTION!="add", GOTO="gnupg_rules_end"
-    
-    # USB SmartCard Readers
-    ## Crypto Stick 1.2
-    ATTR{idVendor}=="20a0", ATTR{idProduct}=="4107", ENV{ID_SMARTCARD_READER}="1", ENV{ID_SMARTCARD_READER_DRIVER}="gnupg", GROUP+="wheel", TAG+="uaccess"
-    ## Nitrokey Pro
-    ATTR{idVendor}=="20a0", ATTR{idProduct}=="4108", ENV{ID_SMARTCARD_READER}="1", ENV{ID_SMARTCARD_READER_DRIVER}="gnupg", GROUP+="wheel", TAG+="uaccess"
-    ## Nitrokey Storage
-    ATTR{idVendor}=="20a0", ATTR{idProduct}=="4109", ENV{ID_SMARTCARD_READER}="1", ENV{ID_SMARTCARD_READER_DRIVER}="gnupg", GROUP+="wheel", TAG+="uaccess"
-    ## Nitrokey Start
-    ATTR{idVendor}=="20a0", ATTR{idProduct}=="4211", ENV{ID_SMARTCARD_READER}="1", ENV{ID_SMARTCARD_READER_DRIVER}="gnupg", GROUP+="wheel", TAG+="uaccess"
-    ## Nitrokey HSM
-    ATTR{idVendor}=="20a0", ATTR{idProduct}=="4230", ENV{ID_SMARTCARD_READER}="1", ENV{ID_SMARTCARD_READER_DRIVER}="gnupg", GROUP+="wheel", TAG+="uaccess"
-    
-    LABEL="gnupg_rules_end"
-  '';
-
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
