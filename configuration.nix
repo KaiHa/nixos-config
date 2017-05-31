@@ -142,6 +142,7 @@
     nitrokey-app
     nix-prefetch-scripts
     nix-repl
+    nix-zsh-completions
     pandoc
     parted
     pass
@@ -192,6 +193,7 @@
     bash.enableCompletion = true;
     ssh.startAgent = false;
     zsh.enable = true;
+    zsh.enableSyntaxHighlighting = true;
   };
 
   # List services that you want to enable:
