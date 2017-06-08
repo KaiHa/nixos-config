@@ -39,6 +39,8 @@
   # GRUB was only enabled to create a legacy boot option to boot
   # from ISO images. If GRUB is enabled, then systemd-boot is not
   # updated. Therfore do not enable it permanently.
+  # If you need to fix the boot-order then use `efibootmgr`. Eg
+  #    $ sudo efibootmgr -o 0018,0019,0000,...
   boot.loader.grub = {
     #enable = true;
     memtest86.enable = true;
@@ -57,12 +59,32 @@
           linux (loop)/live/vmlinuz boot=live config fromiso=/dev/sda1/$isofile
           initrd (loop)/live/initrd.img
       }
-      menuentry "Bootable ISO Image: Tails" {
+      menuentry "Bootable ISO Image: Tails 2" {
           insmod part_gpt
           insmod fat
           set root='hd0,1'
-          linux16 /memdisk iso
-          initrd16 /images/tails.iso
+          set isofile='/images/tails2.iso'
+          loopback loop $isofile
+          linux (loop)/live/vmlinuz2 boot=live config findiso=/images/tails2.iso apparmor=1 security=apparmor nopersistence noprompt timezone=Etc/UTC block.events_dfl_poll_msecs=1000 noautologin module=Tails kaslr slab_nomerge slub_debug=FZ mce=0 vsyscall=none  
+          initrd (loop)/live/initrd2.img
+      }
+      menuentry "Bootable ISO Image: Tails 3" {
+          insmod part_gpt
+          insmod fat
+          set root='hd0,1'
+          set isofile='/images/tails3.iso'
+          loopback loop $isofile
+          linux (loop)/live/vmlinuz boot=live config findiso=/images/tails3.iso apparmor=1 security=apparmor nopersistence noprompt timezone=Etc/UTC block.events_dfl_poll_msecs=1000 noautologin module=Tails kaslr slab_nomerge slub_debug=FZP mce=0 vsyscall=none page_poison=1 union=aufs  
+          initrd (loop)/live/initrd.img
+      }
+      menuentry "Bootable ISO Image: Kali Linux" {
+          insmod part_gpt
+          insmod fat
+          set root='hd0,1'
+          set isofile='/images/kali.iso'
+          loopback loop $isofile
+          linux (loop)/live/vmlinuz boot=live components splash username=root hostname=kali fromiso=/dev/sda1/$isofile
+          initrd (loop)/live/initrd.img
       }
       '';
   };
