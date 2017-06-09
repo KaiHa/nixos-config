@@ -235,8 +235,7 @@
     gutenprint = true;
   };
 
-  services.physlock = { enable = true; };
-
+  services.physlock.enable = true;
   services.vnstat.enable = true;
 
   services.xserver = {
