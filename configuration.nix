@@ -163,6 +163,7 @@
     meld
     mupdf
     mutt
+    ncdu
     nethogs
     nitrokey-app
     nix-prefetch-scripts
@@ -184,6 +185,7 @@
     sysdig
     syslinux
     tmux
+    transmission
     tree
     unzip
     usbutils
