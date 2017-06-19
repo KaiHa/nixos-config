@@ -222,7 +222,7 @@
     bash.enableCompletion = true;
     ssh.startAgent = false;
     zsh.enable = true;
-    zsh.enableSyntaxHighlighting = true;
+    zsh.syntaxHighlighting.enable = true;
   };
 
   # List services that you want to enable:
