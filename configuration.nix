@@ -161,7 +161,6 @@
     linuxPackages.perf
     mc
     meld
-    mupdf
     mutt
     ncdu
     nethogs
@@ -201,6 +200,7 @@
     xcompmgr
     xorg.xev
     xorg.xmessage
+    zathura
     (pkgs.haskellPackages.ghcWithHoogle (self: with self; [
       MissingH
       alex
