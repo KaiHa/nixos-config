@@ -184,7 +184,7 @@
     sysdig
     syslinux
     tmux
-    transmission
+    transmission_gtk
     tree
     unzip
     usbutils
