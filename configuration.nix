@@ -29,6 +29,8 @@
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
+  boot.kernelPackages = pkgs.linuxPackages_4_12;
+
   boot.cleanTmpDir = true;
 
   # Use the systemd-boot EFI boot loader.
