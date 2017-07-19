@@ -10,6 +10,8 @@
       ./hardware-configuration.nix
     ];
 
+  # nixpkgs.overlays = [(import ./overlay.nix)];
+
   systemd.mounts = [
     { where = "/media/nas";
       what = "//fritz.box/FRITZ.NAS/NAS";
@@ -143,6 +145,7 @@
     cifs-utils
     debootstrap
     dfu-programmer
+    (diffoscope.override { enableBloat = true; })
     dmenu
     dstat
     efibootmgr
