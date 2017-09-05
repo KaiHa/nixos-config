@@ -178,7 +178,6 @@
     shotwell
     stalonetray
     stdenv
-    sysdig
     syslinux
     tmux
     transmission_gtk
