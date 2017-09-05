@@ -30,6 +30,7 @@
   hardware.nitrokey.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  hardware.enableRedistributableFirmware = true;
 
   boot.kernelPackages = pkgs.linuxPackages_4_12;
 
