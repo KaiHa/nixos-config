@@ -132,12 +132,10 @@
     aspellDicts.en
     binutils
     blueman
-    byobu
     cdrkit
     cifs-utils
     debootstrap
     dfu-programmer
-    (diffoscope.override { enableBloat = true; })
     dmenu
     dstat
     efibootmgr
