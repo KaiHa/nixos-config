@@ -180,6 +180,7 @@
     tmux
     transmission_gtk
     tree
+    unclutter-xfixes
     unzip
     usbutils
     usermount
