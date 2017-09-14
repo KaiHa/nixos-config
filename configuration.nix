@@ -32,7 +32,7 @@
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
   hardware.enableRedistributableFirmware = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_4_12;
+  boot.kernelPackages = pkgs.linuxPackages_hardened_copperhead;
 
   boot.cleanTmpDir = true;
 
