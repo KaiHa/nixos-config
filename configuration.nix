@@ -27,6 +27,7 @@
   ];
 
   hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = false;
   hardware.nitrokey.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
