@@ -216,6 +216,7 @@
 
   programs = {
     bash.enableCompletion = true;
+    command-not-found.enable = true;
     ssh.startAgent = false;
     zsh.enable = true;
     zsh.syntaxHighlighting.enable = true;
