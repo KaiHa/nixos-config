@@ -138,6 +138,7 @@
     debootstrap
     dfu-programmer
     dmenu
+    dnsutils
     dstat
     efibootmgr
     emacs
