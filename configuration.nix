@@ -118,7 +118,9 @@
       hack-font
       inconsolata
       liberation_ttf
+      noto-fonts-emoji
       powerline-fonts
+      symbola
       ubuntu_font_family
       unifont
     ];
