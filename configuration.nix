@@ -327,7 +327,7 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  nix.useSandbox = true;
+  nix.useSandbox = "relaxed";
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "17.03";
