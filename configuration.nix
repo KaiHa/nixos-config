@@ -236,8 +236,8 @@
 
   # Enable CUPS to print documents.
   services.printing = {
+    drivers = [ pkgs.gutenprint ];
     enable = true;
-    gutenprint = true;
   };
 
   services.physlock.enable = true;
@@ -331,6 +331,6 @@
   nix.useSandbox = "relaxed";
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "17.03";
+  system.stateVersion = "17.09";
 
 }
