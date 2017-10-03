@@ -5,10 +5,11 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./services.nix
+    ./systemPackages.nix
+  ];
 
   # nixpkgs.overlays = [(import ./overlay.nix)];
 
@@ -126,97 +127,6 @@
     ];
   };
 
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [
-    (mutt.override { withSidebar = true; })
-    aspell
-    aspellDicts.de
-    aspellDicts.en
-    binutils
-    blueman
-    cdrkit
-    cifs-utils
-    debootstrap
-    dfu-programmer
-    dmenu
-    dnsutils
-    dstat
-    efibootmgr
-    emacs
-    evince
-    feh
-    file
-    firefox
-    fontconfig
-    gimp
-    git
-    gitAndTools.gitFull
-    gmrun
-    gnumake
-    gnupg
-    gparted
-    kvm
-    linuxPackages.perf
-    mc
-    meld
-    mutt
-    ncdu
-    nethogs
-    nitrokey-app
-    nix-prefetch-scripts
-    nix-repl
-    nix-zsh-completions
-    pandoc
-    parted
-    pass
-    pavucontrol
-    pciutils
-    psmisc
-    pwgen
-    python35
-    rsync
-    rxvt_unicode-with-plugins
-    shotwell
-    stalonetray
-    stdenv
-    syslinux
-    tmux
-    transmission_gtk
-    tree
-    unclutter-xfixes
-    unzip
-    usbutils
-    usermount
-    vim
-    virt-viewer
-    virtmanager
-    vnstat
-    weechat
-    w3m
-    wireshark
-    xorg.xbacklight
-    xcompmgr
-    xorg.xev
-    xorg.xmessage
-    zathura
-    (pkgs.haskellPackages.ghcWithHoogle (self: with self; [
-      MissingH
-      alex
-      cabal-install
-      doctest
-      ghc-mod
-      happy
-      hlint
-      hmatrix
-      xmobar
-      xmonad
-      xmonad-contrib
-      xmonad-extras
-      zlib
-    ]))
-  ];
-
   programs = {
     bash.enableCompletion = true;
     command-not-found.enable = true;
@@ -225,85 +135,8 @@
     zsh.syntaxHighlighting.enable = true;
   };
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    challengeResponseAuthentication = false;
-    passwordAuthentication = false;
-  };
-
-  # Enable CUPS to print documents.
-  services.printing = {
-    drivers = [ pkgs.gutenprint ];
-    enable = true;
-  };
-
-  services.physlock.enable = true;
-  services.vnstat.enable = true;
-
-  services.xserver = {
-    # Enable the X11 windowing system.
-    enable = true;
-    layout = "us";
-    # services.xserver.xkbOptions = "eurosign:e";
-    synaptics.enable = true;
-    synaptics.twoFingerScroll = true;
-    synaptics.tapButtons = false;
-
-    # Enable the Window Manager.
-    #displayManager.gdm.enable = true;
-    #desktopManager.gnome3.enable = true;
-    displayManager.slim = {
-      enable = true;
-      defaultUser = "kai";
-      autoLogin = true;
-      extraConfig = ''
-        sessionstart_cmd    ${pkgs.xorg.sessreg}/bin/sessreg -a -l tty7 %user
-        sessionstop_cmd     ${pkgs.xorg.sessreg}/bin/sessreg -d -l tty7 %user
-      '';
-    };
-    desktopManager.default = "none";
-    windowManager.xmonad.enable = true;
-    windowManager.xmonad.enableContribAndExtras = true;
-    windowManager.xmonad.extraPackages = self: [ self.MissingH ];
-    windowManager.default = "xmonad";
-  };
-
-  systemd.user.services.emacs = {
-    description = "Emacs Daemon";
-    environment = {
-      GTK_DATA_PREFIX = config.system.path;
-      SSH_AUTH_SOCK = "/run/user/1000/gnupg/S.gpg-agent.ssh";
-      GTK_PATH = "${config.system.path}/lib/gtk-3.0:${config.system.path}/lib/gtk-2.0";
-      NIX_PROFILES = "${pkgs.lib.concatStringsSep " " config.environment.profiles}";
-      TERMINFO_DIRS = "/run/current-system/sw/share/terminfo";
-      ASPELL_CONF = "dict-dir /run/current-system/sw/lib/aspell";
-    };
-    serviceConfig = {
-      Type = "forking";
-      ExecStart = "${pkgs.bash}/bin/bash -c 'source ${config.system.build.setEnvironment}; exec emacs --daemon'";
-      ExecStop = "${pkgs.emacs}/bin/emacsclient --eval (kill-emacs)";
-      Restart = "always";
-    };
-    wantedBy = [ "default.target" ];
-  };
-
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.onShutdown = "shutdown";
-  services.spice-vdagentd.enable = true;
-
-### modemmanager is not yet needed
-#  systemd.services.wwan = {
-#    description = "Start ModemManager";
-#    serviceConfig = {
-#      Type = "oneshot";
-#      ExecStart = "${pkgs.dbus}/bin/dbus-send --system --print-reply --reply-timeout=120000 --type=method_call --dest='org.freedesktop.ModemManager1' '/org/freedesktop/ModemManager1' org.freedesktop.ModemManager1.ScanDevices";
-#    };
-#    wantedBy = [ "default.target" ];
-#    after = [ "network-manager.service" ];
-#  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.kai = {
@@ -332,5 +165,4 @@
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "17.09";
-
 }
