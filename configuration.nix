@@ -13,7 +13,10 @@ with pkgs; {
 
   nixpkgs = {
     config.allowUnfree = true;
-    # overlays = [(import ./overlay.nix)];
+    overlays = [( self: super: rec {
+      gnupg = super.gnupg.override { pinentry = pinentry_gtk2; };
+      mutt = super.mutt.override { withSidebar = true; };
+    })];
   };
 
   nix.useSandbox = "relaxed";
@@ -141,7 +144,10 @@ with pkgs; {
   programs = {
     bash.enableCompletion = true;
     command-not-found.enable = true;
+    gnupg.agent.enable = true;
+    gnupg.agent.enableSSHSupport = true;
     ssh.startAgent = false;
+    vim.defaultEditor = true;
     zsh.enable = true;
     zsh.syntaxHighlighting.enable = true;
   };

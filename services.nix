@@ -8,6 +8,7 @@ with pkgs; {
       passwordAuthentication = false;
     };
   
+    pcscd.enable = true;
     physlock.enable = true;
 
     printing = {

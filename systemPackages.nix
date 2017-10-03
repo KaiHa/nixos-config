@@ -2,7 +2,6 @@
 
 {
   environment.systemPackages = with pkgs; [
-    (mutt.override { withSidebar = true; })
     aspell
     aspellDicts.de
     aspellDicts.en
