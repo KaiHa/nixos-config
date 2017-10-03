@@ -4,90 +4,105 @@
 
 { config, pkgs, ... }:
 
-{
+with pkgs; {
   imports = [
     ./hardware-configuration.nix
     ./services.nix
     ./systemPackages.nix
   ];
 
-  # nixpkgs.overlays = [(import ./overlay.nix)];
-
-  systemd.mounts = [
-    { where = "/media/nas";
-      what = "//fritz.box/FRITZ.NAS/NAS";
-      type = "cifs";
-      options = "credentials=/etc/.cifs-cred,iocharset=utf8,uid=1000,noauto,_netdev";
-      after = ["network-online.target" "wpa_supplicant.service"];
-      requires = ["network-online.target" "wpa_supplicant.service"]; }
-  ];
-
-  systemd.automounts = [
-    { wantedBy = ["multi-user.target"];
-      where = "/media/nas"; }
-  ];
-
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = false;
-  hardware.nitrokey.enable = true;
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
-  hardware.enableRedistributableFirmware = true;
-
-  boot.kernelPackages = pkgs.linuxPackages_hardened_copperhead;
-
-  boot.cleanTmpDir = true;
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 60;
-
-  # GRUB was only enabled to create a legacy boot option to boot
-  # from ISO images. If GRUB is enabled, then systemd-boot is not
-  # updated. Therfore do not enable it permanently.
-  # If you need to fix the boot-order then use `efibootmgr`. Eg
-  #    $ sudo efibootmgr -o 0018,0019,0000,...
-  boot.loader.grub = {
-    #enable = true;
-    memtest86.enable = true;
-    version = 2;
-    default = 1;
-    efiSupport = true;
-    device = "/dev/sda";
-    extraFiles = { "memdisk" = "${pkgs.syslinux}/share/syslinux/memdisk"; };
-    extraEntries = ''
-      menuentry "Bootable ISO Image: Debian Stretch" {
-          insmod part_gpt
-          insmod fat
-          set root='hd0,1'
-          set isofile='/images/stretch.iso'
-          loopback loop $isofile
-          linux (loop)/live/vmlinuz boot=live config fromiso=/dev/sda1/$isofile
-          initrd (loop)/live/initrd.img
-      }
-      menuentry "Bootable ISO Image: Tails 3" {
-          insmod part_gpt
-          insmod fat
-          set root='hd0,1'
-          set isofile='/images/tails3.iso'
-          loopback loop $isofile
-          linux (loop)/live/vmlinuz boot=live config findiso=/images/tails3.iso apparmor=1 security=apparmor nopersistence noprompt timezone=Etc/UTC block.events_dfl_poll_msecs=1000 noautologin module=Tails kaslr slab_nomerge slub_debug=FZP mce=0 vsyscall=none page_poison=1 union=aufs  
-          initrd (loop)/live/initrd.img
-      }
-      menuentry "Bootable ISO Image: Kali Linux" {
-          insmod part_gpt
-          insmod fat
-          set root='hd0,1'
-          set isofile='/images/kali.iso'
-          loopback loop $isofile
-          linux (loop)/live/vmlinuz boot=live components splash username=root hostname=kali fromiso=/dev/sda1/$isofile
-          initrd (loop)/live/initrd.img
-      }
-      '';
+  nixpkgs = {
+    config.allowUnfree = true;
+    # overlays = [(import ./overlay.nix)];
   };
 
-  boot.initrd.luks.devices."crypt".allowDiscards = true;
+  nix.useSandbox = "relaxed";
+
+  # The NixOS release to be compatible with for stateful data such as databases.
+  system.stateVersion = "17.09";
+
+
+  systemd = {
+    mounts = [
+      { where = "/media/nas";
+        what = "//fritz.box/FRITZ.NAS/NAS";
+        type = "cifs";
+        options = "credentials=/etc/.cifs-cred,iocharset=utf8,uid=1000,noauto,_netdev";
+        after = ["network-online.target" "wpa_supplicant.service"];
+        requires = ["network-online.target" "wpa_supplicant.service"]; }
+    ];
+  
+    automounts = [
+      { wantedBy = ["multi-user.target"];
+        where = "/media/nas"; }
+    ];
+  };
+
+  hardware = {
+    bluetooth.enable = true;
+    bluetooth.powerOnBoot = false;
+    enableRedistributableFirmware = true;
+    nitrokey.enable = true;
+    pulseaudio.enable = true;
+    pulseaudio.package = pulseaudioFull;
+  };
+
+  boot = {
+    kernelPackages = linuxPackages_hardened_copperhead;
+    cleanTmpDir = true;
+
+    loader = {
+      # Use the systemd-boot EFI boot loader.
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+      timeout = 60;
+      # GRUB was only enabled to create a legacy boot option to boot
+      # from ISO images. If GRUB is enabled, then systemd-boot is not
+      # updated. Therfore do not enable it permanently.
+      # If you need to fix the boot-order then use `efibootmgr`. Eg
+      #    $ sudo efibootmgr -o 0018,0019,0000,...
+      grub = {
+        #enable = true;
+        memtest86.enable = true;
+        version = 2;
+        default = 1;
+        efiSupport = true;
+        device = "/dev/sda";
+        extraFiles = { "memdisk" = "${syslinux}/share/syslinux/memdisk"; };
+        extraEntries = ''
+          menuentry "Bootable ISO Image: Debian Stretch" {
+              insmod part_gpt
+              insmod fat
+              set root='hd0,1'
+              set isofile='/images/stretch.iso'
+              loopback loop $isofile
+              linux (loop)/live/vmlinuz boot=live config fromiso=/dev/sda1/$isofile
+              initrd (loop)/live/initrd.img
+          }
+          menuentry "Bootable ISO Image: Tails 3" {
+              insmod part_gpt
+              insmod fat
+              set root='hd0,1'
+              set isofile='/images/tails3.iso'
+              loopback loop $isofile
+              linux (loop)/live/vmlinuz boot=live config findiso=/images/tails3.iso apparmor=1 security=apparmor nopersistence noprompt timezone=Etc/UTC block.events_dfl_poll_msecs=1000 noautologin module=Tails kaslr slab_nomerge slub_debug=FZP mce=0 vsyscall=none page_poison=1 union=aufs  
+              initrd (loop)/live/initrd.img
+          }
+          menuentry "Bootable ISO Image: Kali Linux" {
+              insmod part_gpt
+              insmod fat
+              set root='hd0,1'
+              set isofile='/images/kali.iso'
+              loopback loop $isofile
+              linux (loop)/live/vmlinuz boot=live components splash username=root hostname=kali fromiso=/dev/sda1/$isofile
+              initrd (loop)/live/initrd.img
+          }
+          '';
+      };
+    };
+    initrd.luks.devices."crypt".allowDiscards = true;
+  };
+
 
   fileSystems."/".options = ["defaults" "noatime" "nodiratime" "discard"];
 
@@ -107,14 +122,10 @@
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
-
   fonts = {
     enableFontDir = true;
     enableGhostscriptFonts = true;
-    fonts = with pkgs; [
+    fonts = [
       corefonts
       hack-font
       inconsolata
@@ -160,9 +171,4 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
-  nix.useSandbox = "relaxed";
-
-  # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "17.09";
 }
