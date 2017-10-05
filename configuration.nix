@@ -178,10 +178,4 @@ with pkgs; {
     kai ALL = NOPASSWD : /run/current-system/sw/bin/poweroff
     kai ALL = NOPASSWD : /run/current-system/sw/bin/reboot
     '';
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 }

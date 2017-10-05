@@ -25,9 +25,11 @@
     git
     gitAndTools.gitFull
     gmrun
+    gnome3.adwaita-icon-theme
     gnumake
     gnupg
     gparted
+    hicolor_icon_theme
     kvm
     linuxPackages.perf
     mc
@@ -44,6 +46,7 @@
     pass
     pavucontrol
     pciutils
+    pcmanfm
     psmisc
     pwgen
     python35
@@ -63,11 +66,11 @@
     virt-viewer
     virtmanager
     vnstat
-    weechat
     w3m
+    weechat
     wireshark
-    xorg.xbacklight
     xcompmgr
+    xorg.xbacklight
     xorg.xev
     xorg.xmessage
     zathura
