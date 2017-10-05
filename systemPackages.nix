@@ -53,7 +53,6 @@
     stalonetray
     stdenv
     syslinux
-    tmux
     transmission_gtk
     tree
     unclutter-xfixes

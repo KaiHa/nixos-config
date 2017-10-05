@@ -147,6 +147,13 @@ with pkgs; {
     gnupg.agent.enable = true;
     gnupg.agent.enableSSHSupport = true;
     ssh.startAgent = false;
+    tmux = {
+      enable = true;
+      escapeTime = 0;
+      keyMode = "vi";
+      shortcut = "a";
+      terminal = "tmux-256color";
+    };
     vim.defaultEditor = true;
     zsh.enable = true;
     zsh.syntaxHighlighting.enable = true;
