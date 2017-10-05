@@ -14,7 +14,7 @@ with pkgs; {
   nixpkgs = {
     config.allowUnfree = true;
     overlays = [( self: super: rec {
-      gnupg = super.gnupg.override { pinentry = pinentry_gtk2; };
+      gnupg = super.gnupg.override { pinentry = pinentry; };
       mutt = super.mutt.override { withSidebar = true; };
     })];
   };
