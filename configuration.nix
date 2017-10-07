@@ -44,6 +44,7 @@ with pkgs; {
   hardware = {
     bluetooth.enable = true;
     bluetooth.powerOnBoot = false;
+    cpu.intel.updateMicrocode = true;
     enableRedistributableFirmware = true;
     nitrokey.enable = true;
     pulseaudio.enable = true;
