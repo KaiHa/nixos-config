@@ -187,4 +187,8 @@ with pkgs; {
     kai ALL = NOPASSWD : /run/current-system/sw/bin/poweroff
     kai ALL = NOPASSWD : /run/current-system/sw/bin/reboot
     '';
+
+  networking.firewall = {
+    allowPing = false;
+  };
 }
