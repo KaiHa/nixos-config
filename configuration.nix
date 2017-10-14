@@ -157,7 +157,7 @@ with pkgs; {
     };
     vim.defaultEditor = true;
     zsh.enable = true;
-    zsh.syntaxHighlighting.enable = true;
+    zsh.syntaxHighlighting.enable = false;
   };
 
   virtualisation.libvirtd.enable = true;
