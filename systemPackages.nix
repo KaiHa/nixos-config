@@ -31,6 +31,7 @@
     gparted
     hicolor_icon_theme
     kvm
+    lbdb
     linuxPackages.perf
     mc
     meld

@@ -15,6 +15,7 @@ with pkgs; {
     config.allowUnfree = true;
     overlays = [( self: super: rec {
       gnupg = super.gnupg.override { pinentry = pinentry; };
+      lbdb = super.lbdb.override { inherit gnupg; goobook = python27Packages.goobook; };
       mutt = super.mutt.override { withSidebar = true; };
     })];
   };
