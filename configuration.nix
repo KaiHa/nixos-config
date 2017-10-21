@@ -116,7 +116,7 @@ with pkgs; {
   fileSystems."/boot".options = ["defaults" "noatime" "nodiratime" "discard"];
 
   networking = {
-    hostName = "nix230";
+    hostName = "c20";
     wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     dhcpcd.enable = false;  # Provided by networkd
     useNetworkd = true;
