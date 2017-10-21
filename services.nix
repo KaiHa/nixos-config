@@ -57,10 +57,6 @@ with pkgs; {
     xserver = {
       enable = true;
       layout = "us";
-      synaptics.enable = true;
-      synaptics.twoFingerScroll = true;
-      synaptics.tapButtons = false;
-
       displayManager.slim = {
         enable = true;
         defaultUser = "kai";
