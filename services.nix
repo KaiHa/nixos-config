@@ -60,7 +60,7 @@ with pkgs; {
       displayManager.slim = {
         enable = true;
         defaultUser = "kai";
-        autoLogin = true;
+        autoLogin = false;
         extraConfig = ''
           sessionstart_cmd    ${xorg.sessreg}/bin/sessreg -a -l tty7 %user
           sessionstop_cmd     ${xorg.sessreg}/bin/sessreg -d -l tty7 %user
