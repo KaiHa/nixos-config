@@ -109,7 +109,8 @@ with pkgs; {
   };
 
 
-  fileSystems."/".options = ["defaults" "noatime" "nodiratime" "discard"];
+  fileSystems."/".options     = ["defaults" "noatime" "nodiratime" "nodiscard"];
+  fileSystems."/boot".options = ["defaults" "noatime" "nodiratime" "discard"];
 
   networking.hostName = "nix230";
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.

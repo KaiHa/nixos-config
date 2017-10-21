@@ -2,6 +2,9 @@
 
 with pkgs; {
   services = {
+    fstrim = {
+      enable = true;
+    };
     openssh = {
       enable = true;
       challengeResponseAuthentication = false;
