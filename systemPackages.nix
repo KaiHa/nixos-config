@@ -50,7 +50,7 @@
     pcmanfm
     psmisc
     pwgen
-    python35
+    python3
     rsync
     rxvt_unicode-with-plugins
     shotwell
