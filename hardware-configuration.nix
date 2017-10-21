@@ -8,24 +8,29 @@
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sdhci_pci" ];
+  boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ahci" "sd_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/d34bccec-e3ac-4e4c-9737-c64875025155";
+    { device = "/dev/disk/by-uuid/13ac36ca-d9f8-44c0-8cb3-a30a0b98ce9f";
       fsType = "ext4";
     };
 
-  boot.initrd.luks.devices."crypt".device = "/dev/disk/by-uuid/949a0af8-afd4-44c2-bf46-a06cb05325f5";
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/6A6B-B6D7";
-      fsType = "vfat";
+  fileSystems."/media/nas" =
+    { device = "systemd-1";
+      fsType = "autofs";
     };
 
-  swapDevices = [ ];
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/3438c591-bafa-491a-8f72-2c9c945f009a";
+      fsType = "ext4";
+    };
 
-  nix.maxJobs = lib.mkDefault 4;
-  powerManagement.cpuFreqGovernor = "powersave";
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/23f63990-46bf-4b21-8c74-f9bd9f9f29bc"; }
+    ];
+
+  nix.maxJobs = lib.mkDefault 16;
+  powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 }
