@@ -83,13 +83,11 @@ with pkgs; {
   };
 
   hardware = {
-    bluetooth.enable = true;
-    bluetooth.powerOnBoot = false;
+    bluetooth.enable = false;
     cpu.intel.updateMicrocode = true;
     enableRedistributableFirmware = true;
     nitrokey.enable = true;
     pulseaudio.enable = true;
-    pulseaudio.package = pulseaudioFull;
   };
 
   powerManagement = {
@@ -117,7 +115,7 @@ with pkgs; {
 
   networking = {
     hostName = "c20";
-    wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+    wireless.enable = false;  # Enables wireless support via wpa_supplicant.
     dhcpcd.enable = false;  # Provided by networkd
     useNetworkd = true;
     firewall.allowPing = false;

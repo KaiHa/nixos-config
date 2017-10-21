@@ -77,15 +77,4 @@ with pkgs; {
       };
     };
   };
-
-### modemmanager is not yet needed
-#  systemd.services.wwan = {
-#    description = "Start ModemManager";
-#    serviceConfig = {
-#      Type = "oneshot";
-#      ExecStart = "${dbus}/bin/dbus-send --system --print-reply --reply-timeout=120000 --type=method_call --dest='org.freedesktop.ModemManager1' '/org/freedesktop/ModemManager1' org.freedesktop.ModemManager1.ScanDevices";
-#    };
-#    wantedBy = [ "default.target" ];
-#    after = [ "network-manager.service" ];
-#  };
 }

@@ -5,7 +5,6 @@
     adapta-gtk-theme
     alsaUtils
     binutils
-    blueman
     cdrkit
     chromium
     cifs-utils
