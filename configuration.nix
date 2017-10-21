@@ -103,44 +103,9 @@ with pkgs; {
     cleanTmpDir = true;
 
     loader = {
-      # Use the systemd-boot EFI boot loader.
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-      timeout = 60;
-      # GRUB was only enabled to create a legacy boot option to boot
-      # from ISO images. If GRUB is enabled, then systemd-boot is not
-      # updated. Therfore do not enable it permanently.
-      # If you need to fix the boot-order then use `efibootmgr`. Eg
-      #    $ sudo efibootmgr -o 0018,0019,0000,...
-      grub = {
-        #enable = true;
-        memtest86.enable = true;
-        version = 2;
-        default = 1;
-        efiSupport = true;
-        device = "/dev/sda";
-        extraFiles = { "memdisk" = "${syslinux}/share/syslinux/memdisk"; };
-        extraEntries = ''
-          menuentry "Bootable ISO Image: Debian Stretch" {
-              insmod part_gpt
-              insmod fat
-              set root='hd0,1'
-              set isofile='/images/stretch.iso'
-              loopback loop $isofile
-              linux (loop)/live/vmlinuz boot=live config fromiso=/dev/sda1/$isofile
-              initrd (loop)/live/initrd.img
-          }
-          menuentry "Bootable ISO Image: Tails 3" {
-              insmod part_gpt
-              insmod fat
-              set root='hd0,1'
-              set isofile='/images/tails3.iso'
-              loopback loop $isofile
-              linux (loop)/live/vmlinuz boot=live config findiso=/images/tails3.iso apparmor=1 security=apparmor nopersistence noprompt timezone=Etc/UTC block.events_dfl_poll_msecs=1000 noautologin module=Tails kaslr slab_nomerge slub_debug=FZP mce=0 vsyscall=none page_poison=1 union=aufs
-              initrd (loop)/live/initrd.img
-          }
-          '';
-      };
+      grub.enable = true;
+      grub.version = 2;
+      grub.device = "/dev/sda";
     };
     initrd.luks.devices."crypt".allowDiscards = true;
     supportedFilesystems = [ "nfs4" ];
