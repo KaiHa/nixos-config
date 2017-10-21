@@ -105,7 +105,6 @@ with pkgs; {
       grub.version = 2;
       grub.device = "/dev/sda";
     };
-    initrd.luks.devices."crypt".allowDiscards = true;
     supportedFilesystems = [ "nfs4" ];
   };
 
