@@ -158,6 +158,7 @@ with pkgs; {
     command-not-found.enable = true;
     gnupg.agent.enable = true;
     gnupg.agent.enableSSHSupport = true;
+    mosh.enable = true;
     ssh.startAgent = false;
     tmux = {
       enable = true;
