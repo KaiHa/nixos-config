@@ -9,6 +9,7 @@ with pkgs; {
       enable = true;
       challengeResponseAuthentication = false;
       passwordAuthentication = false;
+      permitRootLogin = "no";
     };
   
     pcscd.enable = true;
