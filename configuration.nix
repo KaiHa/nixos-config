@@ -31,7 +31,7 @@ with pkgs; {
       { where = "/media/nas";
         what = "//fritz.box/FRITZ.NAS/NAS";
         type = "cifs";
-        options = "credentials=/etc/.cifs-cred,iocharset=utf8,uid=1000,noauto,_netdev";
+        options = "credentials=/etc/.cifs-cred,iocharset=utf8,uid=1000,noauto,_netdev,vers=1.0";
         after = ["network-online.target" "wpa_supplicant.service"];
         requires = ["network-online.target" "wpa_supplicant.service"]; }
     ];
