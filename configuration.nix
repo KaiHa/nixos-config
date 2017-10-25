@@ -107,8 +107,8 @@ with pkgs; {
   };
 
 
-  fileSystems."/".options     = ["defaults" "noatime" "nodiratime" "nodiscard"];
-  fileSystems."/boot".options = ["defaults" "noatime" "nodiratime" "discard"];
+  fileSystems."/".options     = ["defaults" "noatime" "nodiratime"];
+  fileSystems."/boot".options = ["defaults" "noatime" "nodiratime"];
 
   networking = {
     hostName = "c20";
