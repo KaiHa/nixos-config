@@ -2,6 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
+    adapta-gtk-theme
     aspell
     aspellDicts.de
     aspellDicts.en

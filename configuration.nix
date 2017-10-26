@@ -174,6 +174,10 @@ with pkgs; {
         r! /home/kai/.xmonad/xmonad.state
       '';
     };
+    sessionVariables = {
+      GTK_THEME = "Adapta";
+      GTK2_RC_FILES = "${adapta-gtk-theme}/share/themes/Adapta/gtk-2.0/gtkrc";
+    };
   };
 
   security.apparmor.enable = true;
