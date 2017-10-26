@@ -27,6 +27,7 @@
     gitAndTools.gitFull
     gmrun
     gnome3.adwaita-icon-theme
+    gnome3.dconf
     gnumake
     gnupg
     gparted
