@@ -93,15 +93,6 @@ with pkgs; {
               linux (loop)/live/vmlinuz boot=live config findiso=/images/tails3.iso apparmor=1 security=apparmor nopersistence noprompt timezone=Etc/UTC block.events_dfl_poll_msecs=1000 noautologin module=Tails kaslr slab_nomerge slub_debug=FZP mce=0 vsyscall=none page_poison=1 union=aufs  
               initrd (loop)/live/initrd.img
           }
-          menuentry "Bootable ISO Image: Kali Linux" {
-              insmod part_gpt
-              insmod fat
-              set root='hd0,1'
-              set isofile='/images/kali.iso'
-              loopback loop $isofile
-              linux (loop)/live/vmlinuz boot=live components splash username=root hostname=kali fromiso=/dev/sda1/$isofile
-              initrd (loop)/live/initrd.img
-          }
           '';
       };
     };
