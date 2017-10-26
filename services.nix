@@ -5,6 +5,9 @@ with pkgs; {
     fstrim = {
       enable = true;
     };
+
+    journald.extraConfig = "SystemMaxUse=128M";
+
     openssh = {
       enable = true;
       challengeResponseAuthentication = false;
