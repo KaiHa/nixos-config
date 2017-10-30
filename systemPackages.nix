@@ -16,7 +16,7 @@
     dnsutils
     dstat
     efibootmgr
-    emacs
+    (emacsWithPackages (p: [ p.notmuch ]))
     evince
     feh
     file
@@ -37,6 +37,7 @@
     linuxPackages.perf
     mc
     meld
+    notmuch
     mutt
     ncdu
     nethogs
