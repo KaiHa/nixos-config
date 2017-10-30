@@ -14,7 +14,7 @@ with pkgs; {
       passwordAuthentication = false;
       permitRootLogin = "no";
     };
-  
+
     pcscd.enable = true;
     physlock.enable = true;
 
@@ -22,17 +22,17 @@ with pkgs; {
       drivers = [ gutenprint ];
       enable = true;
     };
-  
+
     spice-vdagentd.enable = true;
     vnstat.enable = true;
-  
+
     xserver = {
       enable = true;
       layout = "us";
       synaptics.enable = true;
       synaptics.twoFingerScroll = true;
       synaptics.tapButtons = false;
-  
+
       displayManager.slim = {
         enable = true;
         defaultUser = "kai";
@@ -70,6 +70,30 @@ with pkgs; {
         ExecStop = "${emacs}/bin/emacsclient --eval (kill-emacs)";
         Restart = "always";
       };
+      wantedBy = [ "default.target" ];
+    };
+
+    fetch-mail = {
+      description = "Fetch mail";
+      serviceConfig = {
+        Type = "oneshot";
+        WorkingDirectory = "%h/.mail/account.gmail/";
+        ExecStart = [
+          "${gmailieer}/bin/gmi sync"
+          "${notmuch}/bin/notmuch new"
+        ];
+      };
+      path = [ bash notmuch ];
+    };
+  };
+
+  systemd.user.timers = {
+    fetch-mail = {
+      timerConfig = {
+        OnCalendar = "*-*-* *:0/5:00";
+        Unit = "fetch-mail.service";
+      };
+      after = [ "network-online.target" ];
       wantedBy = [ "default.target" ];
     };
   };
