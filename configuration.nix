@@ -177,6 +177,7 @@ with pkgs; {
     sessionVariables = {
       GTK_THEME = "Adapta";
       GTK2_RC_FILES = "${adapta-gtk-theme}/share/themes/Adapta/gtk-2.0/gtkrc";
+      EMACS_ORG_CONTRIB_DIR = "${emacsPackages.org}/share/org/contrib/lisp/";
     };
   };
 

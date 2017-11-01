@@ -16,7 +16,7 @@
     dnsutils
     dstat
     efibootmgr
-    (emacsWithPackages (p: [ p.notmuch ]))
+    (emacsWithPackages (p: [ p.notmuch p.org ]))
     evince
     feh
     file
