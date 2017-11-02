@@ -24,6 +24,7 @@
     gimp
     git
     gitAndTools.gitFull
+    gmailieer
     gmrun
     gnome3.adwaita-icon-theme
     gnome3.dconf

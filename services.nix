@@ -62,13 +62,9 @@ with pkgs; {
       description = "Fetch mail";
       serviceConfig = {
         Type = "oneshot";
-        WorkingDirectory = "%h/.mail/account.gmail/";
-        ExecStart = [
-          "${gmailieer}/bin/gmi sync"
-          "${notmuch}/bin/notmuch new"
-        ];
+        ExecStart = ["${notmuch}/bin/notmuch new"];
       };
-      path = [ bash notmuch ];
+      path = [ bash gmailieer notmuch ];
       after = [ "wait-for-network.service" ];
       requires = [ "wait-for-network.service" ];
       wantedBy = [ "default.target" ];
