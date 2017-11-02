@@ -32,8 +32,8 @@ with pkgs; {
         what = "//fritz.box/FRITZ.NAS/NAS";
         type = "cifs";
         options = "credentials=/etc/.cifs-cred,iocharset=utf8,uid=1000,noauto,_netdev,vers=1.0";
-        after = ["network-online.target" "wpa_supplicant.service"];
-        requires = ["network-online.target" "wpa_supplicant.service"]; }
+        after = ["network-online.target"];
+        requires = ["network-online.target"]; }
     ];
   
     automounts = [
@@ -103,8 +103,13 @@ with pkgs; {
   fileSystems."/".options     = ["defaults" "noatime" "nodiratime" "nodiscard"];
   fileSystems."/boot".options = ["defaults" "noatime" "nodiratime" "discard"];
 
-  networking.hostName = "nix230";
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking = {
+    hostName = "nix230";
+    wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+    dhcpcd.enable = false;  # Provided by networkd
+    useNetworkd = true;
+    firewall.allowPing = false;
+  };
 
   # Select internationalisation properties.
   i18n = {
@@ -187,8 +192,4 @@ with pkgs; {
     kai ALL = NOPASSWD : /run/current-system/sw/bin/poweroff
     kai ALL = NOPASSWD : /run/current-system/sw/bin/reboot
     '';
-
-  networking.firewall = {
-    allowPing = false;
-  };
 }
