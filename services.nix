@@ -65,23 +65,6 @@ with pkgs; {
         ExecStart = ["${notmuch}/bin/notmuch new"];
       };
       path = [ bash gmailieer notmuch ];
-      after = [ "wait-for-network.service" ];
-      requires = [ "wait-for-network.service" ];
-      wantedBy = [ "default.target" ];
-    };
-
-    # Add a user service that waits for the network, because the
-    # network-online.target is not available from a user service
-    wait-for-network = {
-      description = "Wait for the network to become online";
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = [
-          "${bash}/bin/bash -c 'while ! curl --silent http://google.com >/dev/null; do sleep 1; done'"
-        ];
-        TimeoutStartSec = "30s";
-      };
-      path = [ bash curl ];
     };
   };
 
