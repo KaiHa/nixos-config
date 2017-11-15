@@ -4,7 +4,7 @@ with pkgs; {
   services = {
     emacs = {
       enable = true;
-      package = (emacsWithPackages (p: [ ghostscript p.notmuch p.org ]));
+      package = (emacsWithPackages (p: [ ghostscript p.org ]));
     };
 
     fstrim = {
