@@ -9,6 +9,7 @@
     binutils
     blueman
     cdrkit
+    chromium
     cifs-utils
     debootstrap
     dfu-programmer

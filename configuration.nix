@@ -12,7 +12,10 @@ with pkgs; {
   ];
 
   nixpkgs = {
-    config.allowUnfree = true;
+    config = {
+      allowUnfree = true;
+      # chromium.enablePepperFlash = true;
+    };
     overlays = [( self: super: rec {
       gnupg = super.gnupg.override { pinentry = pinentry; };
       lbdb = super.lbdb.override { inherit gnupg; goobook = python27Packages.goobook; };
@@ -143,6 +146,9 @@ with pkgs; {
 
   programs = {
     bash.enableCompletion = true;
+    chromium.enable = true;
+    chromium.extensions = [ "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
+    ];
     command-not-found.enable = true;
     gnupg.agent.enable = true;
     gnupg.agent.enableSSHSupport = true;
@@ -195,6 +201,7 @@ with pkgs; {
   };
 
   security.apparmor.enable = true;
+  security.chromiumSuidSandbox.enable = true;
   security.sudo.extraConfig =''
     kai ALL = NOPASSWD : /run/current-system/sw/bin/physlock -d
     kai ALL = NOPASSWD : /run/current-system/sw/bin/poweroff
