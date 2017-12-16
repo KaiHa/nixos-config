@@ -109,6 +109,7 @@ with pkgs; {
     dhcpcd.enable = false;  # Provided by networkd
     useNetworkd = true;
     firewall.allowPing = false;
+    firewall.allowedTCPPorts = [5232];
   };
 
   # Select internationalisation properties.
@@ -178,7 +179,14 @@ with pkgs; {
       "tmpfiles.d/xmonad.conf".text = ''
         r! /home/kai/.xmonad/xmonad.state
       '';
+      "radicale.rights".text = ''
+        [any]
+        user = kai
+        collection = .*
+        permission = rw
+      '';
     };
+
     sessionVariables = {
       GTK_THEME = "Adapta";
       GTK2_RC_FILES = "${adapta-gtk-theme}/share/themes/Adapta/gtk-2.0/gtkrc";
