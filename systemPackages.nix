@@ -13,6 +13,7 @@
     cifs-utils
     debootstrap
     dfu-programmer
+    diffoscope
     dmenu
     dnsutils
     dstat
@@ -32,10 +33,12 @@
     gnumake
     gnupg
     gparted
+    graphviz
     hicolor_icon_theme
     kvm
     lbdb
     linuxPackages.perf
+    lshw
     mc
     meld
     notmuch
@@ -51,9 +54,11 @@
     pavucontrol
     pciutils
     pcmanfm
+    pdftk
     psmisc
     pwgen
     python3
+    quilt
     rsync
     rxvt_unicode-with-plugins
     shotwell
@@ -73,6 +78,7 @@
     w3m
     weechat
     wireshark
+    wol
     xcompmgr
     xorg.xbacklight
     xorg.xev

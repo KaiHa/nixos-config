@@ -17,6 +17,7 @@ with pkgs; {
       # chromium.enablePepperFlash = true;
     };
     overlays = [( self: super: rec {
+      diffoscope = super.diffoscope.override { enableBloat = true; };
       gnupg = super.gnupg.override { pinentry = pinentry; };
       lbdb = super.lbdb.override { inherit gnupg; goobook = python27Packages.goobook; };
     })];
