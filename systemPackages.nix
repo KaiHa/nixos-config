@@ -39,7 +39,6 @@
     mc
     meld
     notmuch
-    mutt
     ncdu
     nethogs
     nitrokey-app
