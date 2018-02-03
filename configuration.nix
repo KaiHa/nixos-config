@@ -55,6 +55,10 @@ with pkgs; {
     pulseaudio.package = pulseaudioFull;
   };
 
+  powerManagement = {
+    powertop.enable = false;
+  };
+
   boot = {
     kernelPackages = linuxPackages_hardened_copperhead;
     cleanTmpDir = true;
