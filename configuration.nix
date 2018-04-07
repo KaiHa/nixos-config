@@ -129,6 +129,8 @@ with pkgs; {
                       "839496" "6c71c4" "93a1a1" "fdf6e3" ];
   };
 
+  sound.enableOSSEmulation = false;
+
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
