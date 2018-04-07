@@ -60,7 +60,7 @@ with pkgs; {
   };
 
   boot = {
-    kernelPackages = linuxPackages_hardened_copperhead;
+    kernelPackages = linuxPackages_copperhead_hardened;
     cleanTmpDir = true;
 
     loader = {
