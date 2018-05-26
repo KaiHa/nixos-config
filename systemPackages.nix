@@ -44,6 +44,7 @@
     notmuch
     ncdu
     nethogs
+    nfs-utils
     nitrokey-app
     nix-prefetch-scripts
     nix-repl

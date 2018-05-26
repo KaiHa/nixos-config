@@ -31,17 +31,33 @@ with pkgs; {
 
   systemd = {
     mounts = [
-      { where = "/media/nas";
-        what = "//fritz.box/FRITZ.NAS/NAS";
-        type = "cifs";
-        options = "credentials=/etc/.cifs-cred,iocharset=utf8,uid=1000,noauto,_netdev,vers=1.0";
+      { where = "/media/KAI";
+        what = "192.168.1.1:/mnt/sda1/PRIVATE/KAI";
+        type = "nfs4";
+        options = "";
+        after = ["network-online.target"];
+        requires = ["network-online.target"]; }
+      { where = "/media/PUBLIC";
+        what = "192.168.1.1:/mnt/sda1/PUBLIC";
+        type = "nfs4";
+        options = "";
+        after = ["network-online.target"];
+        requires = ["network-online.target"]; }
+      { where = "/media/PUBLIC_RW";
+        what = "192.168.1.1:/mnt/sda1/PUBLIC_RW";
+        type = "nfs4";
+        options = "";
         after = ["network-online.target"];
         requires = ["network-online.target"]; }
     ];
   
     automounts = [
       { wantedBy = ["multi-user.target"];
-        where = "/media/nas"; }
+        where = "/media/KAI"; }
+      { wantedBy = ["multi-user.target"];
+        where = "/media/PUBLIC"; }
+      { wantedBy = ["multi-user.target"];
+        where = "/media/PUBLIC_RW"; }
     ];
   };
 
@@ -104,6 +120,7 @@ with pkgs; {
       };
     };
     initrd.luks.devices."crypt".allowDiscards = true;
+    supportedFilesystems = [ "nfs4" ];
   };
 
 
