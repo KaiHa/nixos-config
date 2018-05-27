@@ -3,7 +3,12 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let
+   not_required_for_online = ''
+     [Link]
+     RequiredForOnline=no
+     '';
+in
 with pkgs; {
   imports = [
     ./hardware-configuration.nix
@@ -35,22 +40,19 @@ with pkgs; {
         what = "192.168.1.1:/mnt/sda1/PRIVATE/KAI";
         type = "nfs4";
         options = "";
-        after = ["network-online.target"];
-        requires = ["network-online.target"]; }
+        after = ["network-online.target"]; }
       { where = "/media/PUBLIC";
         what = "192.168.1.1:/mnt/sda1/PUBLIC";
         type = "nfs4";
         options = "";
-        after = ["network-online.target"];
-        requires = ["network-online.target"]; }
+        after = ["network-online.target"]; }
       { where = "/media/PUBLIC_RW";
         what = "192.168.1.1:/mnt/sda1/PUBLIC_RW";
         type = "nfs4";
         options = "";
-        after = ["network-online.target"];
-        requires = ["network-online.target"]; }
+        after = ["network-online.target"]; }
     ];
-  
+
     automounts = [
       { wantedBy = ["multi-user.target"];
         where = "/media/KAI"; }
@@ -59,6 +61,24 @@ with pkgs; {
       { wantedBy = ["multi-user.target"];
         where = "/media/PUBLIC_RW"; }
     ];
+
+    network = {
+      enable = true;
+      networks = {
+        "10-wwp0s20u4i6"= {
+          name = "wwp0s20u4i6";
+          extraConfig = not_required_for_online;
+        };
+        "10-enp0s25" = {
+          name = "enp0s25";
+          extraConfig = not_required_for_online;
+        };
+        "11-virbr" = {
+          name = "virbr*";
+          extraConfig = not_required_for_online;
+        };
+      };
+    };
   };
 
   hardware = {
@@ -113,7 +133,7 @@ with pkgs; {
               set root='hd0,1'
               set isofile='/images/tails3.iso'
               loopback loop $isofile
-              linux (loop)/live/vmlinuz boot=live config findiso=/images/tails3.iso apparmor=1 security=apparmor nopersistence noprompt timezone=Etc/UTC block.events_dfl_poll_msecs=1000 noautologin module=Tails kaslr slab_nomerge slub_debug=FZP mce=0 vsyscall=none page_poison=1 union=aufs  
+              linux (loop)/live/vmlinuz boot=live config findiso=/images/tails3.iso apparmor=1 security=apparmor nopersistence noprompt timezone=Etc/UTC block.events_dfl_poll_msecs=1000 noautologin module=Tails kaslr slab_nomerge slub_debug=FZP mce=0 vsyscall=none page_poison=1 union=aufs
               initrd (loop)/live/initrd.img
           }
           '';
