@@ -48,7 +48,6 @@
     nfs-utils
     nitrokey-app
     nix-prefetch-scripts
-    nix-repl
     nix-zsh-completions
     pandoc
     parted
