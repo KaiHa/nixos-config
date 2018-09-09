@@ -2,6 +2,11 @@
 
 with pkgs; {
   services = {
+
+    dbus = {
+      enable = true;
+    };
+
     emacs = {
       enable = true;
       package = (emacsWithPackages (p: [ ghostscript p.org ]));
