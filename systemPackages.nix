@@ -85,15 +85,13 @@
     xorg.xev
     xorg.xmessage
     zathura
-    (haskellPackages.ghcWithHoogle (self: with self; [
-      MissingH
+    (haskellPackages.ghcWithPackages (self: with self; [
       alex
       cabal-install
       doctest
       ghc-mod
       happy
       hlint
-      hmatrix
       xmobar
       xmonad
       xmonad-contrib
