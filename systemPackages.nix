@@ -89,7 +89,6 @@
       alex
       cabal-install
       doctest
-      ghc-mod
       happy
       hlint
       xmobar
