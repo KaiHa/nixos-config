@@ -205,6 +205,10 @@ with pkgs; {
       keyMode = "vi";
       shortcut = "a";
       terminal = "tmux-256color";
+      extraTmuxConf = ''
+        run-shell ${pkgs.tmuxPlugins.urlview}/share/tmux-plugins/urlview/urlview.tmux
+        run-shell ${pkgs.tmuxPlugins.open}/share/tmux-plugins/open/open.tmux
+      '';
     };
     vim.defaultEditor = true;
     zsh.enable = true;
