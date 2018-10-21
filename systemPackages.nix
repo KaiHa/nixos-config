@@ -3,6 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     adapta-gtk-theme
+    alacritty
     alsaUtils
     aspell
     aspellDicts.de
