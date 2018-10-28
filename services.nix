@@ -79,8 +79,6 @@ with pkgs; {
       windowManager = {
         default = "xmonad";
         xmonad.enable = true;
-        xmonad.enableContribAndExtras = true;
-        xmonad.extraPackages = self: [ self.MissingH ];
       };
     };
   };
