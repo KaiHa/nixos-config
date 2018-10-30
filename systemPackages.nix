@@ -4,9 +4,6 @@
   environment.systemPackages = with pkgs; [
     adapta-gtk-theme
     alsaUtils
-    aspell
-    aspellDicts.de
-    aspellDicts.en
     binutils
     blueman
     cdrkit
