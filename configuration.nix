@@ -241,10 +241,6 @@ with pkgs; {
         permission = rw
       '';
     };
-
-    sessionVariables = {
-      EMACS_ORG_CONTRIB_DIR = "${emacsPackages.org}/share/org/contrib/lisp/";
-    };
   };
 
   security.apparmor.enable = true;

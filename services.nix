@@ -7,11 +7,6 @@ with pkgs; {
       enable = true;
     };
 
-    emacs = {
-      enable = true;
-      package = (emacsWithPackages (p: [ ghostscript p.org ]));
-    };
-
     fstrim = {
       enable = true;
     };
