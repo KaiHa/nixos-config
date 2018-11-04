@@ -64,14 +64,6 @@
     w3m
     wireshark
     wol
-    xcompmgr
-    (haskellPackages.ghcWithPackages (self: with self; [
-      alex
-      cabal-install
-      doctest
-      happy
-      hlint
-      zlib
-    ]))
   ];
+
 }
