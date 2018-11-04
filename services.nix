@@ -83,27 +83,6 @@ with pkgs; {
     };
   };
 
-  systemd.user.services = {
-    fetch-mail = {
-      description = "Fetch mail";
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = ["${notmuch}/bin/notmuch new"];
-      };
-      path = [ bash gmailieer notmuch ];
-    };
-  };
-
-  systemd.user.timers = {
-    fetch-mail = {
-      timerConfig = {
-        OnCalendar = "*-*-* *:0/5:00";
-        Unit = "fetch-mail.service";
-      };
-      wantedBy = [ "default.target" ];
-    };
-  };
-
 ### modemmanager is not yet needed
 #  systemd.services.wwan = {
 #    description = "Start ModemManager";
