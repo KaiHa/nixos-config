@@ -71,6 +71,7 @@ with pkgs; {
         };
         "10-enp0s25" = {
           name = "enp0s25";
+          DHCP = "yes";
           extraConfig = not_required_for_online;
         };
         "11-virbr" = {
