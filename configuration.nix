@@ -106,6 +106,7 @@ with pkgs; {
       # Use the systemd-boot EFI boot loader.
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
+      efi.efiSysMountPoint = "/boot/efi";
       timeout = 60;
       # GRUB was only enabled to create a legacy boot option to boot
       # from ISO images. If GRUB is enabled, then systemd-boot is not
@@ -142,7 +143,7 @@ with pkgs; {
           '';
       };
     };
-    initrd.luks.devices."crypt".allowDiscards = true;
+    initrd.luks.devices."crypted".allowDiscards = true;
     supportedFilesystems = [ "nfs4" ];
   };
 
