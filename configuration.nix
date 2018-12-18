@@ -125,7 +125,7 @@ with pkgs; {
           menuentry "Bootable ISO Image: Debian Stretch" {
               insmod part_gpt
               insmod fat
-              set root='hd0,1'
+              set root='hd0,3'
               set isofile='/images/stretch.iso'
               loopback loop $isofile
               linux (loop)/live/vmlinuz boot=live config fromiso=/dev/sda1/$isofile
@@ -134,7 +134,7 @@ with pkgs; {
           menuentry "Bootable ISO Image: Tails 3" {
               insmod part_gpt
               insmod fat
-              set root='hd0,1'
+              set root='hd0,3'
               set isofile='/images/tails3.iso'
               loopback loop $isofile
               linux (loop)/live/vmlinuz boot=live config findiso=/images/tails3.iso apparmor=1 security=apparmor nopersistence noprompt timezone=Etc/UTC block.events_dfl_poll_msecs=1000 noautologin module=Tails kaslr slab_nomerge slub_debug=FZP mce=0 vsyscall=none page_poison=1 union=aufs
