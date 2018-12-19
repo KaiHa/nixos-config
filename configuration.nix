@@ -236,12 +236,6 @@ with pkgs; {
       "tmpfiles.d/xmonad.conf".text = ''
         r! /home/kai/.xmonad/xmonad.state
       '';
-      "radicale.rights".text = ''
-        [any]
-        user = kai
-        collection = .*
-        permission = rw
-      '';
     };
   };
 

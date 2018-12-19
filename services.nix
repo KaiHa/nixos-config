@@ -34,23 +34,6 @@ with pkgs; {
       enable = true;
     };
 
-    radicale = {
-      enable = true;
-      config = ''
-        [server]
-        hosts = 0.0.0.0:5232
-        [storage]
-        filesystem_folder = /var/lib/radicale
-        [auth]
-        type = htpasswd
-        htpasswd_filename = /etc/radicale.users
-        htpasswd_encryption = bcrypt
-        [rights]
-        type = from_file
-        file = /etc/radicale.rights
-      '';
-    };
-
     spice-vdagentd.enable = true;
     vnstat.enable = true;
 
