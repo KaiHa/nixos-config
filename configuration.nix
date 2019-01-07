@@ -97,8 +97,6 @@ with pkgs; {
   };
 
   boot = {
-    #kernelPackages = linuxPackages_copperhead_lts;
-    #kernelPackages = linuxPackages_latest;
     kernelPackages = linuxPackages_latest_hardened;
     cleanTmpDir = true;
 
