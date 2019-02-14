@@ -201,7 +201,6 @@ with pkgs; {
     tmux = {
       enable = true;
       escapeTime = 0;
-      keyMode = "vi";
       shortcut = "a";
       terminal = "tmux-256color";
       extraTmuxConf = ''
