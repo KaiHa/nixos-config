@@ -126,7 +126,7 @@ with pkgs; {
               set root='hd0,3'
               set isofile='/images/stretch.iso'
               loopback loop $isofile
-              linux (loop)/live/vmlinuz boot=live config fromiso=/dev/sda1/$isofile
+              linux (loop)/live/vmlinuz boot=live config fromiso=/dev/sda3/$isofile
               initrd (loop)/live/initrd.img
           }
           menuentry "Bootable ISO Image: Tails 3" {
