@@ -25,6 +25,7 @@ with pkgs; {
       gnupg = super.gnupg.override { pinentry = pinentry; };
       lbdb = super.lbdb.override { inherit gnupg; goobook = python27Packages.goobook; };
       zathura = super.zathura.override { synctexSupport = false; };
+      linux_4_19 = super.linux_4_19.override { modDirVersion = "4.19.34-hardened"; };
     })];
   };
 
