@@ -39,31 +39,6 @@ with pkgs; {
 
     spice-vdagentd.enable = true;
     vnstat.enable = true;
-
-    xserver = {
-      enable = true;
-      layout = "us";
-      synaptics.enable = true;
-      synaptics.twoFingerScroll = true;
-      synaptics.tapButtons = false;
-
-      displayManager.lightdm = {
-        enable = true;
-        extraConfig = ''
-            sessions-directory=${sway}/share/wayland-sessions/
-
-            [Seat:*]
-            autologin-session=sway
-            user-session=sway
-            greeter-session = lightdm-gtk-greeter
-            autologin-user = kai
-            autologin-user-timeout = 0
-          '';
-      };
-      windowManager = {
-        xmonad.enable = true;
-      };
-    };
   };
 
 ### modemmanager is not yet needed
