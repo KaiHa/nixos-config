@@ -89,6 +89,7 @@ with pkgs; {
     cpu.intel.updateMicrocode = true;
     enableRedistributableFirmware = true;
     nitrokey.enable = true;
+    opengl.enable = true;
     pulseaudio.enable = true;
     pulseaudio.package = pulseaudioFull;
   };
@@ -199,6 +200,16 @@ with pkgs; {
     gnupg.agent.enable = true;
     gnupg.agent.enableSSHSupport = true;
     ssh.startAgent = false;
+    sway = {
+      enable = true;
+      extraPackages = with pkgs; [ dmenu swayidle xwayland ];
+      extraSessionCommands = ''
+           export SDL_VIDEODRIVER=wayland
+           # needs qt5.qtwayland in systemPackages
+           export QT_QPA_PLATFORM=wayland-egl
+           export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+         '';
+    };
     tmux = {
       enable = true;
       escapeTime = 0;

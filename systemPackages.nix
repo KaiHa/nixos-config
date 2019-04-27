@@ -47,6 +47,7 @@
     psmisc
     pwgen
     python3
+    qt5.qtwayland
     quilt
     rsync
     shotwell

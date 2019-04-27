@@ -47,18 +47,20 @@ with pkgs; {
       synaptics.twoFingerScroll = true;
       synaptics.tapButtons = false;
 
-      displayManager.slim = {
+      displayManager.lightdm = {
         enable = true;
-        defaultUser = "kai";
-        autoLogin = true;
         extraConfig = ''
-          sessionstart_cmd    ${xorg.sessreg}/bin/sessreg -a -l tty7 %user
-          sessionstop_cmd     ${xorg.sessreg}/bin/sessreg -d -l tty7 %user
-        '';
+            sessions-directory=${sway}/share/wayland-sessions/
+
+            [Seat:*]
+            autologin-session=sway
+            user-session=sway
+            greeter-session = lightdm-gtk-greeter
+            autologin-user = kai
+            autologin-user-timeout = 0
+          '';
       };
-      desktopManager.default = "none";
       windowManager = {
-        default = "xmonad";
         xmonad.enable = true;
       };
     };
