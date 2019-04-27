@@ -243,8 +243,8 @@ with pkgs; {
   environment = {
     etc = {
       "tmpfiles.d/xmonad.conf".text = ''
-        r! /home/kai/.xmonad/xmonad.state
-      '';
+          r! /home/kai/.xmonad/xmonad.state
+        '';
     };
   };
 
