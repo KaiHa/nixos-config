@@ -12,6 +12,7 @@ with pkgs; {
     };
 
     journald.extraConfig = "SystemMaxUse=128M";
+    mingetty.autologinUser = "kai";
 
     nullmailer = {
       enable = true;
