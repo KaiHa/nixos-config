@@ -251,6 +251,7 @@ with pkgs; {
   security.apparmor.enable = true;
   security.chromiumSuidSandbox.enable = true;
   security.sudo.extraConfig =''
+    kai ALL = NOPASSWD : /run/current-system/sw/bin/light
     kai ALL = NOPASSWD : /run/current-system/sw/bin/physlock -d
     kai ALL = NOPASSWD : /run/current-system/sw/bin/poweroff
     kai ALL = NOPASSWD : /run/current-system/sw/bin/reboot

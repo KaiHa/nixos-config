@@ -30,6 +30,7 @@
     graphviz
     hicolor_icon_theme
     kvm
+    light
     linuxPackages.perf
     lshw
     nethogs
