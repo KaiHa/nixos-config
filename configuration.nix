@@ -208,6 +208,8 @@ with pkgs; {
            # needs qt5.qtwayland in systemPackages
            export QT_QPA_PLATFORM=wayland-egl
            export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+
+           export GDK_BACKEND=wayland
          '';
     };
     tmux = {
