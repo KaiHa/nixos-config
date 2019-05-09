@@ -157,6 +157,7 @@ with pkgs; {
     useNetworkd = true;
     firewall.allowPing = false;
     firewall.allowedTCPPorts = [5232];
+    firewall.checkReversePath = false;
   };
 
   # Select internationalisation properties.
