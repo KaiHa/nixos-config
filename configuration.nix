@@ -226,8 +226,11 @@ with pkgs; {
     zsh.syntaxHighlighting.enable = false;
   };
 
-  virtualisation.libvirtd.enable = true;
-  virtualisation.libvirtd.onShutdown = "shutdown";
+  virtualisation.libvirtd = {
+    enable = true;
+    onShutdown = "shutdown";
+    qemuPackage = qemu_kvm;
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.kai = {
