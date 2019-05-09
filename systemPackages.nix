@@ -36,6 +36,7 @@
     nethogs
     nfs-utils
     nitrokey-app
+    nixops
     nix-prefetch-scripts
     nix-zsh-completions
     pandoc
