@@ -33,7 +33,6 @@
     light
     linuxPackages.perf
     lshw
-    nethogs
     nitrokey-app
     nixops
     nix-prefetch-scripts
