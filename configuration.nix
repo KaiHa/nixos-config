@@ -3,12 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let
-   not_required_for_online = ''
-     [Link]
-     RequiredForOnline=no
-     '';
-in
 with pkgs; {
   imports = [
     ./hardware-configuration.nix
@@ -63,21 +57,27 @@ with pkgs; {
 
     network = {
       enable = true;
-      networks = {
-        "10-wwp0s20u4i6"= {
-          name = "wwp0s20u4i6";
-          extraConfig = not_required_for_online;
-        };
-        "10-enp0s25" = {
-          name = "enp0s25";
-          DHCP = "yes";
-          extraConfig = not_required_for_online;
-        };
-        "11-virbr" = {
-          name = "virbr*";
-          extraConfig = not_required_for_online;
-        };
-      };
+      networks =
+        let
+          not_required_for_online = ''
+             [Link]
+             RequiredForOnline=no
+          '';
+        in {
+          "10-wwp0s20u4i6"= {
+            name = "wwp0s20u4i6";
+            extraConfig = not_required_for_online;
+          };
+          "10-enp0s25" = {
+            name = "enp0s25";
+            DHCP = "yes";
+            extraConfig = not_required_for_online;
+          };
+          "11-virbr" = {
+            name = "virbr*";
+            extraConfig = not_required_for_online;
+          };
+       };
     };
   };
 
