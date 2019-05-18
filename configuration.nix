@@ -27,7 +27,7 @@ with pkgs; {
     })];
   };
 
-  nix.useSandbox = "relaxed";
+  nix.useSandbox = true;
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "18.09";
