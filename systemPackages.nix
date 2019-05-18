@@ -55,6 +55,7 @@
     shotwell
     stdenv
     syslinux
+    tor-browser-bundle
     transmission_gtk
     tree
     unzip
