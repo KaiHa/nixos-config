@@ -34,7 +34,6 @@
     linuxPackages.perf
     lshw
     nethogs
-    nfs-utils
     nitrokey-app
     nixops
     nix-prefetch-scripts
