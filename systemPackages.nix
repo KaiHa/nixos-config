@@ -41,7 +41,6 @@
     pass
     pavucontrol
     pciutils
-    pcmanfm
     pdftk
     psmisc
     pwgen
