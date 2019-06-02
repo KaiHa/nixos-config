@@ -11,6 +11,7 @@ with pkgs; {
       enable = true;
     };
 
+    gvfs.enable = true;
     journald.extraConfig = "SystemMaxUse=128M";
     mingetty.autologinUser = "kai";
 
