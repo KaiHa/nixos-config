@@ -2,7 +2,6 @@
 
 {
   environment.systemPackages = with pkgs; [
-    adapta-gtk-theme
     alsaUtils
     binutils
     blueman
@@ -21,13 +20,11 @@
     gimp
     git
     gitAndTools.gitFull
-    gnome3.adwaita-icon-theme
     gnome3.dconf
     gnumake
     gnupg
     gparted
     graphviz
-    hicolor_icon_theme
     kvm
     light
     linuxPackages.perf
