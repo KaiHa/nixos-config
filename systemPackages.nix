@@ -25,6 +25,12 @@
     gnupg
     gparted
     graphviz
+    (haskellPackages.ghcWithPackages (p: with p; [
+      alex
+      cabal-install
+      doctest
+      happy
+    ]))
     kvm
     light
     linuxPackages.perf
