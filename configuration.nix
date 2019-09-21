@@ -2,8 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-with pkgs; {
+{ config, pkgs, ... }: with pkgs; {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -227,7 +226,7 @@ with pkgs; {
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.extraUsers.kai = {
+  users.users.kai = {
     isNormalUser = true;
     uid = 1000;
     shell = "${zsh}/bin/zsh";
