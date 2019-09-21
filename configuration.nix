@@ -6,8 +6,6 @@
 with pkgs; {
   imports = [
     ./hardware-configuration.nix
-    ./services.nix
-    ./systemPackages.nix
   ];
 
   nixpkgs = {
@@ -246,6 +244,73 @@ with pkgs; {
           r! /home/kai/.xmonad/xmonad.state
         '';
     };
+    systemPackages = [
+      alsaUtils
+      binutils
+      blueman
+      cdrkit
+      cifs-utils
+      debootstrap
+      dfu-programmer
+      dnsutils
+      dstat
+      efibootmgr
+      evince
+      feh
+      file
+      firefox
+      fontconfig
+      gimp
+      git
+      gitAndTools.gitFull
+      gnome3.dconf
+      gnumake
+      gnupg
+      gparted
+      graphviz
+      (haskellPackages.ghcWithPackages (p: with p; [
+        alex
+        cabal-install
+        doctest
+        happy
+      ]))
+      kvm
+      light
+      linuxPackages.perf
+      lshw
+      nitrokey-app
+      nixops
+      nix-prefetch-scripts
+      nix-zsh-completions
+      pandoc
+      parted
+      pass
+      pavucontrol
+      pciutils
+      pdftk
+      psmisc
+      pwgen
+      python3
+      qt5.qtwayland
+      quilt
+      rsync
+      shotwell
+      stdenv
+      syslinux
+      tor-browser-bundle
+      transmission_gtk
+      tree
+      unzip
+      usbutils
+      usermount
+      vim
+      virt-viewer
+      virtmanager
+      vnstat
+      w3m
+      wireshark
+      wol
+    ];
   };
 
   security.apparmor.enable = true;
@@ -255,4 +320,50 @@ with pkgs; {
     kai ALL = NOPASSWD : /run/current-system/sw/bin/poweroff
     kai ALL = NOPASSWD : /run/current-system/sw/bin/reboot
     '';
+
+  services = {
+
+    dbus = {
+      enable = true;
+    };
+
+    fstrim = {
+      enable = true;
+    };
+
+    gvfs.enable = true;
+    journald.extraConfig = "SystemMaxUse=128M";
+    mingetty.autologinUser = "kai";
+
+    nullmailer = {
+      enable = true;
+      config.allmailfrom = "postmaster.rob@gmail.com";
+      remotesFile = "/etc/nullmailer.remotes";
+    };
+
+    openssh = {
+      enable = true;
+      challengeResponseAuthentication = false;
+      passwordAuthentication = false;
+      permitRootLogin = "no";
+    };
+
+    pcscd.enable = true;
+    physlock.enable = true;
+
+    printing = {
+      drivers = [ gutenprint ];
+      enable = true;
+    };
+
+    spice-vdagentd.enable = true;
+
+    tor = {
+      enable = true;
+      client.enable = true;
+      client.dns.enable = true;
+    };
+
+    vnstat.enable = true;
+  };
 }
