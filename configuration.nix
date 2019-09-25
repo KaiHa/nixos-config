@@ -67,6 +67,7 @@
 
   environment = {
     systemPackages = [
+      certbot
       git
       gnupg
       parted
