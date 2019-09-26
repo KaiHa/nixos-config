@@ -5,6 +5,7 @@
 { config, pkgs, ... }: with pkgs; {
   imports = [
     ./hardware-configuration.nix
+    ./private.nix
   ];
 
   # The NixOS release to be compatible with for stateful data such as databases.
@@ -24,7 +25,6 @@
   };
 
   networking = {
-    hostName = "vps1";
     firewall.allowPing = false;
   };
 
