@@ -142,17 +142,20 @@
     supportedFilesystems = [ "nfs4" ];
   };
 
-
-  fileSystems."/".options     = ["defaults" "noatime" "nodiratime" "nodiscard"];
-  fileSystems."/boot".options = ["defaults" "noatime" "nodiratime" "discard"];
+  fileSystems = {
+    "/".options     = ["defaults" "noatime" "nodiratime" "nodiscard"];
+    "/boot".options = ["defaults" "noatime" "nodiratime" "discard"];
+  };
 
   networking = {
     hostName = "nix230";
     wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     dhcpcd.enable = false;  # Provided by networkd
     useNetworkd = true;
-    firewall.allowPing = false;
-    firewall.checkReversePath = false;
+    firewall = {
+      allowPing = false;
+      checkReversePath = false;
+    };
   };
 
   # Select internationalisation properties.
@@ -312,13 +315,15 @@
     ];
   };
 
-  security.apparmor.enable = true;
-  security.sudo.extraConfig =''
-    kai ALL = NOPASSWD : /run/current-system/sw/bin/light
-    kai ALL = NOPASSWD : /run/current-system/sw/bin/physlock -d
-    kai ALL = NOPASSWD : /run/current-system/sw/bin/poweroff
-    kai ALL = NOPASSWD : /run/current-system/sw/bin/reboot
-    '';
+  security = {
+    apparmor.enable = true;
+    sudo.extraConfig =''
+                      kai ALL = NOPASSWD : /run/current-system/sw/bin/light
+                      kai ALL = NOPASSWD : /run/current-system/sw/bin/physlock -d
+                      kai ALL = NOPASSWD : /run/current-system/sw/bin/poweroff
+                      kai ALL = NOPASSWD : /run/current-system/sw/bin/reboot
+                      '';
+  };
 
   services = {
 
