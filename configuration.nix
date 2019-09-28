@@ -61,7 +61,11 @@
              RequiredForOnline=no
           '';
         in {
-          "10-wwp0s20u4i6"= {
+          "10-lo" = {
+            name = "lo";
+            address = ["127.0.0.1/8" "::1/128"];
+          };
+          "10-wwp0s20u4i6" = {
             name = "wwp0s20u4i6";
             extraConfig = not_required_for_online;
           };
