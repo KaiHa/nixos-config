@@ -364,6 +364,8 @@
       enable = true;
     };
 
+    resolved.enable = false;
+    stubby.enable = true;
     spice-vdagentd.enable = true;
 
     tor = {
