@@ -68,6 +68,7 @@
   environment = {
     systemPackages = [
       certbot
+      endlessh
       git
       gnupg
       parted
@@ -83,12 +84,27 @@
     '';
 
   services = {
-
     openssh = {
       enable = true;
       challengeResponseAuthentication = false;
       passwordAuthentication = false;
       permitRootLogin = "no";
+    };
+  };
+
+  systemd = {
+    services = {
+      endlessh = {
+        description = "ssh tarpit";
+        after = [ "network.target" ];
+        wants = [ "network.target" ];
+        serviceConfig = {
+          Type = "simple";
+          Restart= "on-failure";
+          ExecStart= "${endlessh}/bin/endlessh -p 22 -v -d 60000";
+        };
+        wantedBy = [ "multi-user.target" ];
+      };
     };
   };
 }
