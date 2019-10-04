@@ -101,7 +101,7 @@
         serviceConfig = {
           Type = "simple";
           Restart= "on-failure";
-          ExecStart= "${endlessh}/bin/endlessh -p 22 -v -d 60000";
+          ExecStart= "${endlessh}/bin/endlessh -p 22 -v";
         };
         wantedBy = [ "multi-user.target" ];
       };
