@@ -30,7 +30,8 @@
 
   # Select internationalisation properties.
   i18n = {
-    consoleFont = "Lat2-Terminus22";
+    consoleFont = "ter-u28n";
+    consolePackages = [ terminus_font ];
     consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
     consoleColors = [ "000000" "dc322f" "859900" "b58900" "268bd2" "d33682"
