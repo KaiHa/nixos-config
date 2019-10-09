@@ -65,6 +65,10 @@
             name = "lo";
             address = ["127.0.0.1/8" "::1/128"];
           };
+          "10-wlp3s0" = {
+            name = "wlp3s0";
+            DHCP = "yes";
+          };
           "10-wwp0s20u4i6" = {
             name = "wwp0s20u4i6";
             extraConfig = not_required_for_online;
@@ -154,7 +158,7 @@
   networking = {
     hostName = "nix230";
     wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-    dhcpcd.enable = false;  # Provided by networkd
+    useDHCP = false;  # Provided by networkd
     useNetworkd = true;
     firewall = {
       allowPing = false;
