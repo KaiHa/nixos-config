@@ -114,7 +114,7 @@ with pkgs; {
   networking = {
     hostName = "c20";
     wireless.enable = false;  # Enables wireless support via wpa_supplicant.
-    dhcpcd.enable = false;  # Provided by networkd
+    useDHCP = false;  # Provided by networkd
     useNetworkd = true;
     firewall.allowPing = false;
     firewall.allowedTCPPorts = [5232];
