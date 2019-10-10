@@ -90,6 +90,7 @@
     bluetooth.enable = true;
     bluetooth.powerOnBoot = false;
     cpu.intel.updateMicrocode = true;
+    enableAllFirmware = true;
     enableRedistributableFirmware = true;
     nitrokey.enable = true;
     opengl.enable = true;
@@ -258,6 +259,7 @@
       alsaUtils
       binutils
       blueman
+      bluez-tools
       cdrkit
       cifs-utils
       debootstrap
@@ -334,8 +336,13 @@
 
   services = {
 
+    blueman.enable = true;
+
     dbus = {
       enable = true;
+      packages = [ blueman bluez dbus gvfs polkit pulseaudio
+                   rtkit wpa_supplicant
+                 ];
     };
 
     fstrim = {
