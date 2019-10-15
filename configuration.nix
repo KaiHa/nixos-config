@@ -103,7 +103,7 @@
         serviceConfig = {
           Type = "simple";
           Restart= "on-failure";
-          ExecStart= "${endlessh}/bin/endlessh -p 22 -v";
+          ExecStart= "${endlessh}/bin/endlessh -p 22";
         };
         wantedBy = [ "multi-user.target" ];
       };
