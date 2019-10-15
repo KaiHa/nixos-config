@@ -26,6 +26,7 @@
 
   networking = {
     firewall.allowPing = false;
+    firewall.logRefusedConnections = false;
   };
 
   # Select internationalisation properties.
