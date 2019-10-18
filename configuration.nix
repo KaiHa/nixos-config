@@ -183,6 +183,7 @@
   time.timeZone = "Europe/Amsterdam";
 
   fonts = {
+    enableDefaultFonts = true;
     enableFontDir = true;
     enableGhostscriptFonts = true;
     fonts = [
@@ -190,7 +191,10 @@
       hack-font
       inconsolata
       liberation_ttf
+      noto-fonts
+      noto-fonts-cjk
       noto-fonts-emoji
+      noto-fonts-extra
       powerline-fonts
       symbola
       ubuntu_font_family
