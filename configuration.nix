@@ -14,6 +14,8 @@
     overlays = [( self: super: rec {
       gnupg = super.gnupg.override { pinentry = pinentry; };
       lbdb = super.lbdb.override { inherit gnupg; goobook = python27Packages.goobook; };
+      sway = super.sway.overrideAttrs (oldAttrs: rec { separateDebugInfo = true; });
+      wlroots = super.wlroots.overrideAttrs (oldAttrs: rec { separateDebugInfo = true; });
       zathura = super.zathura.override { synctexSupport = false; };
     })];
   };
@@ -262,6 +264,7 @@
           r! /home/kai/.xmonad/xmonad.state
         '';
     };
+    extraOutputsToInstall = [ "debug" ];
     systemPackages = [
       alsaUtils
       binutils
