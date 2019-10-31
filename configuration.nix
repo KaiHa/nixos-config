@@ -235,10 +235,13 @@
     zsh.syntaxHighlighting.enable = false;
   };
 
-  virtualisation.libvirtd = {
-    enable = true;
-    onShutdown = "shutdown";
-    qemuPackage = qemu_kvm;
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      onShutdown = "shutdown";
+      qemuPackage = qemu_kvm;
+    };
+    # xen.enable = true;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
