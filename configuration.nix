@@ -96,8 +96,11 @@
     enableRedistributableFirmware = true;
     nitrokey.enable = true;
     opengl.enable = true;
-    pulseaudio.enable = true;
-    pulseaudio.package = pulseaudioFull;
+    pulseaudio = {
+      enable = true;
+      extraModules = [ pulseaudio-modules-bt ];
+      package = pulseaudioFull;
+    };
   };
 
   powerManagement = {
@@ -311,6 +314,7 @@
       pciutils
       pdftk
       psmisc
+      pulsemixer
       pwgen
       python3
       qt5.qtwayland
