@@ -86,6 +86,23 @@
           };
        };
     };
+
+    user.services.jackpa = {
+      enable = true;
+      script = ''
+                            ${pulseaudio}/bin/pactl load-module module-jack-sink channels=2
+                            ${pulseaudio}/bin/pactl load-module module-jack-source channels=2
+                            ${pulseaudio}/bin/pacmd set-default-sink jack_out
+                            '';
+      serviceConfig = {
+        Type = "oneshot";
+      };
+      wantedBy = ["default.target"];
+    };
+
+    user.services.pulseaudio.environment = {
+      JACK_PROMISCUOUS_SERVER = "jackaudio";
+    };
   };
 
   hardware = {
@@ -99,7 +116,7 @@
     pulseaudio = {
       enable = true;
       extraModules = [ pulseaudio-modules-bt ];
-      package = pulseaudioFull;
+      package = pkgs.pulseaudioFull.override { jackaudioSupport = true; };
     };
   };
 
@@ -110,6 +127,7 @@
   boot = {
     kernelPackages = linuxPackages_latest_hardened;
     cleanTmpDir = true;
+    kernelModules = [ "snd-seq" "snd-rawmidi" ];
 
     loader = {
       # Use the systemd-boot EFI boot loader.
@@ -254,7 +272,7 @@
     isNormalUser = true;
     uid = 1000;
     shell = "${zsh}/bin/zsh";
-    extraGroups = [ "wheel" "networkmanager" "nitrokey" "libvirtd" ];
+    extraGroups = [ "wheel" "audio" "jackaudio" "networkmanager" "nitrokey" "libvirtd" ];
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCKeT9XLuhzUU4k4gd8URDS3gQIZemTqXSvlVy5nYXJ4gMfJ0sYVMrI9KBBU2Ukkb0Cl8Rmfzblf1iE6IUMrat4Cb9RGIbzjiAzC2XaLUsDC5W87Qv5bgV0t83nWQFjWPWy38Ybjcp8+WuvJNaX9ECc8t+xwtUdVNZ5TszblEqE5wKfOAqJZNGO8uwX2ZY7hOLr9C9a/AM74ouHqR7iDaujMNdLuOA6XmHAnWI6aiA6Lu3NOpGO6UXIudUCIUQ+ymSCCfu99xaAs5aXw/XQLS2f8W8C4q45m/V+uozdqYOK2wrFQlhFa/7TZwi5s3XPeG0d7t5HnxymSIHO7HudP0E7 cardno:00050000351F"
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDNRoiSl7xkHoHyytkeqhRMeVblZv35Nt8xppfCglFa9LC97fxxDAxoFDK5CTyqRa6PUV1/kD4pLKrP2euhj5GY6m14mvkJxvXpY/SuRN11yp+ATCNC3GeQgTt/jWThhohnZW8OLNXi7lqf6OMIBLUvxajMpqVDCreAU40CYp9E4A+yVTahQCusO/O6ivlURaqqiQ8O0zOCkY5ZPc6KZRoE1VRnX9K7fTL3XrMIPcw27WvSycD9v6cTKSew3eN+SM2BO/AMqaCPpFPegpKpRGK/yrLJwVZTg9YrFav0410ffQ+XvEs7rlVup4eaeeCaWB1tu/mqVxwUFhRkdeDq8vfj JuiceSSH"
@@ -354,7 +372,7 @@
 
     dbus = {
       enable = true;
-      packages = [ blueman bluez dbus gvfs polkit pulseaudio
+      packages = [ blueman bluez dbus gvfs jack2 polkit pulseaudio
                    rtkit wpa_supplicant
                  ];
     };
@@ -364,6 +382,18 @@
     };
 
     gvfs.enable = true;
+
+    jack = {
+      jackd.enable = true;
+      alsa.enable = false;
+      loopback = {
+        enable = true;
+        dmixConfig = ''
+        period_size 2048
+      '';
+      };
+    };
+
     journald.extraConfig = "SystemMaxUse=128M";
     mingetty.autologinUser = "kai";
 
