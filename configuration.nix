@@ -87,6 +87,44 @@
        };
     };
 
+    services.tunePowermanagement = {
+      enable = true;
+      script = ''
+          echo 'min_power' > '/sys/class/scsi_host/host4/link_power_management_policy' || true
+          echo 'min_power' > '/sys/class/scsi_host/host5/link_power_management_policy' || true
+          echo 'min_power' > '/sys/class/scsi_host/host3/link_power_management_policy' || true
+          echo 'min_power' > '/sys/class/scsi_host/host1/link_power_management_policy' || true
+          echo 'min_power' > '/sys/class/scsi_host/host2/link_power_management_policy' || true
+          echo 'min_power' > '/sys/class/scsi_host/host0/link_power_management_policy' || true
+          echo '1'         > '/sys/module/snd_hda_intel/parameters/power_save' || true
+          echo 'auto'      > '/sys/bus/i2c/devices/i2c-1/device/power/control' || true
+          echo 'auto'      > '/sys/bus/usb/devices/2-4/power/control' || true
+          echo 'auto'      > '/sys/bus/i2c/devices/i2c-6/device/power/control' || true
+          echo 'auto'      > '/sys/bus/usb/devices/1-1.4/power/control' || true
+          echo 'auto'      > '/sys/bus/i2c/devices/i2c-3/device/power/control' || true
+          echo 'auto'      > '/sys/bus/i2c/devices/i2c-4/device/power/control' || true
+          echo 'auto'      > '/sys/bus/i2c/devices/i2c-2/device/power/control' || true
+          echo 'auto'      > '/sys/bus/i2c/devices/i2c-5/device/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:00:1d.0/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:03:00.0/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:00:1f.2/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:00:1c.0/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:00:1f.0/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:02:00.0/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:00:16.0/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:00:1a.0/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:00:19.0/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:00:02.0/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:00:14.0/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:00:1c.2/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:00:00.0/power/control' || true
+          echo 'auto'      > '/sys/bus/pci/devices/0000:00:1b.0/power/control' || true
+      '';
+      serviceConfig = {
+        Type = "oneshot";
+      };
+      wantedBy = ["default.target"];
+    };
     user.services.jackpa = {
       enable = true;
       script = ''
@@ -121,6 +159,7 @@
   };
 
   powerManagement = {
+    cpuFreqGovernor = "powersave";
     powertop.enable = false;
   };
 
@@ -128,6 +167,10 @@
     kernelPackages = linuxPackages_latest_hardened;
     cleanTmpDir = true;
     kernelModules = [ "snd-seq" "snd-rawmidi" ];
+
+    kernel.sysctl = {
+      "vm.dirty_writeback_centisecs" = 1500;
+    };
 
     loader = {
       # Use the systemd-boot EFI boot loader.
