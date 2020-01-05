@@ -26,6 +26,7 @@
 
   networking = {
     firewall.allowPing = false;
+    firewall.allowedTCPPorts = [ 80 ];
     firewall.logRefusedConnections = false;
   };
 
@@ -73,6 +74,7 @@
       endlessh
       git
       gnupg
+      httptunnel
       parted
       psmisc
       wget
@@ -104,6 +106,22 @@
           Type = "simple";
           Restart= "on-failure";
           ExecStart= "${endlessh}/bin/endlessh -p 22";
+        };
+        wantedBy = [ "multi-user.target" ];
+      };
+      httptunnel = {
+        description = "http tunnel server";
+        after = [ "network.target" ];
+        wants = [ "network.target" ];
+        serviceConfig = {
+          Type = "forking";
+          # PIDFile does not work, most likely because 'DynamicUser' implies 'PrivateTmp'
+          # PIDFile = "/run/httptunnel-server.pid";
+          Restart = "on-failure";
+          ExecStart = "${httptunnel}/bin/hts --forward-port localhost:49092 --pid-file /run/httptunnel-server.pid 80";
+          DynamicUser = true;
+          CapabilityBoundingSet = "CAP_NET_BIND_SERVICE";
+          AmbientCapabilities = "CAP_NET_BIND_SERVICE";
         };
         wantedBy = [ "multi-user.target" ];
       };
