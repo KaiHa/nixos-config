@@ -474,12 +474,6 @@
     stubby.enable = true;
     spice-vdagentd.enable = true;
 
-    tor = {
-      enable = true;
-      client.enable = true;
-      client.dns.enable = true;
-    };
-
     vnstat.enable = true;
   };
 }
