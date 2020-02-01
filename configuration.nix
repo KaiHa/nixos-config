@@ -70,10 +70,9 @@ with pkgs; {
           name = "wwp0s20u4i6";
           extraConfig = not_required_for_online;
         };
-        "10-enp0s25" = {
-          name = "enp0s25";
+        "10-ens5" = {
+          name = "ens5";
           DHCP = "yes";
-          extraConfig = not_required_for_online;
         };
         "11-virbr" = {
           name = "virbr*";
