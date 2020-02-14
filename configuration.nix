@@ -104,8 +104,28 @@
         wants = [ "network.target" ];
         serviceConfig = {
           Type = "simple";
-          Restart= "on-failure";
-          ExecStart= "${endlessh}/bin/endlessh -p 22";
+          Restart = "on-failure";
+          ExecStart = "${endlessh}/bin/endlessh -p 22";
+          AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+          CapabilityBoundingSet = "CAP_NET_BIND_SERVICE";
+          DynamicUser = true;
+          InaccessiblePaths = ["/etc" "/run" "/var"];
+          MemoryDenyWriteExecute = true;
+          NoNewPrivileges = true;
+          PrivateDevices = true;
+          PrivateTmp = true;
+          ProtectControlGroups = true;
+          ProtectHome = true;
+          ProtectHostname = true;
+          ProtectKernelModules = true;
+          ProtectKernelTunables = true;
+          ProtectSystem = "strict";
+          RestrictRealtime = true;
+          RestrictSUIDSGID = true;
+          SystemCallFilter = [ "@system-service"
+                               "~@privileged"
+                               "~@resources"
+                             ];
         };
         wantedBy = [ "multi-user.target" ];
       };
