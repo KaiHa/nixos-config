@@ -421,6 +421,11 @@
   services = {
 
     blueman.enable = true;
+    xserver = {
+      enable = true;
+      autorun = false;
+      desktopManager.xfce.enable = true;
+    };
 
     dbus = {
       enable = true;
