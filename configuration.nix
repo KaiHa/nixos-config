@@ -233,14 +233,17 @@
     };
   };
 
+  console = {
+    colors = [ "000000" "dc322f" "859900" "b58900" "268bd2" "d33682"
+               "2aa198" "eee8d5" "002b36" "cb4b16" "586e75" "657b83"
+               "839496" "6c71c4" "93a1a1" "fdf6e3" ];
+    font = "Lat2-Terminus16";
+    keyMap = "us";
+  };
+
   # Select internationalisation properties.
   i18n = {
-    consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
-    consoleColors = [ "000000" "dc322f" "859900" "b58900" "268bd2" "d33682"
-                      "2aa198" "eee8d5" "002b36" "cb4b16" "586e75" "657b83"
-                      "839496" "6c71c4" "93a1a1" "fdf6e3" ];
   };
 
   sound.enableOSSEmulation = false;
@@ -291,7 +294,7 @@
       escapeTime = 0;
       shortcut = "a";
       terminal = "tmux-256color";
-      extraTmuxConf = ''
+      extraConfig = ''
         run-shell ${pkgs.tmuxPlugins.urlview}/share/tmux-plugins/urlview/urlview.tmux
         run-shell ${pkgs.tmuxPlugins.open}/share/tmux-plugins/open/open.tmux
       '';
