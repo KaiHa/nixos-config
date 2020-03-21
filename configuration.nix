@@ -339,6 +339,7 @@
         '';
     };
     extraOutputsToInstall = [ "debug" ];
+    sessionVariables.PATH = [ "\${HOME}/bin" ];
     systemPackages = [
       alsaUtils
       binutils
