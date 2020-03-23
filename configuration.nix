@@ -192,11 +192,11 @@
         device = "/dev/sda";
         extraFiles = { "memdisk" = "${syslinux}/share/syslinux/memdisk"; };
         extraEntries = ''
-          menuentry "Bootable ISO Image: Debian Stretch" {
+          menuentry "Bootable ISO Image: Debian Stable" {
               insmod part_gpt
               insmod fat
               set root='hd0,3'
-              set isofile='/images/stretch.iso'
+              set isofile='/images/debian.iso'
               loopback loop $isofile
               linux (loop)/live/vmlinuz boot=live config fromiso=/dev/sda3/$isofile
               initrd (loop)/live/initrd.img
