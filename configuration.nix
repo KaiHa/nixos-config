@@ -174,7 +174,7 @@
 
     loader = {
       # Use the systemd-boot EFI boot loader.
-      systemd-boot.enable = true;
+      systemd-boot.enable = false;
       efi.canTouchEfiVariables = true;
       efi.efiSysMountPoint = "/boot/efi";
       timeout = 60;
@@ -184,7 +184,7 @@
       # If you need to fix the boot-order then use `efibootmgr`. Eg
       #    $ sudo efibootmgr -o 0018,0019,0000,...
       grub = {
-        #enable = true;
+        enable = true;
         memtest86.enable = true;
         version = 2;
         default = 1;
@@ -312,7 +312,7 @@
       onShutdown = "shutdown";
       qemuPackage = qemu_kvm;
     };
-    # xen.enable = true;
+    xen.enable = true;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
