@@ -23,7 +23,7 @@
   nix.useSandbox = true;
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "18.09";
+  system.stateVersion = "19.09";
 
 
   systemd = {
@@ -213,7 +213,7 @@
           '';
       };
     };
-    initrd.luks.devices."crypted".allowDiscards = true;
+    initrd.luks.devices."nixenc".allowDiscards = true;
     supportedFilesystems = [ "nfs4" ];
   };
 
