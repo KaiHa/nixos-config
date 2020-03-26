@@ -184,12 +184,12 @@
       # If you need to fix the boot-order then use `efibootmgr`. Eg
       #    $ sudo efibootmgr -o 0018,0019,0000,...
       grub = {
-        #enable = true;
+        enable = false;
         memtest86.enable = true;
         version = 2;
         default = 1;
         efiSupport = true;
-        device = "/dev/sda";
+        device = "nodev";
         extraFiles = { "memdisk" = "${syslinux}/share/syslinux/memdisk"; };
         extraEntries = ''
           menuentry "Bootable ISO Image: Debian Stable" {
