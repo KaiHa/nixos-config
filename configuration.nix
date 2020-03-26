@@ -483,6 +483,10 @@
     stubby.enable = true;
     spice-vdagentd.enable = true;
 
+    usbguard = {
+      enable = true;
+    };
+
     vnstat.enable = true;
   };
 }
