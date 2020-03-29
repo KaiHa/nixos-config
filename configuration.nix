@@ -436,6 +436,7 @@
       packages = [ blueman bluez dbus gvfs jack2 polkit pulseaudio
                    rtkit wpa_supplicant
                  ];
+      socketActivated = true;
     };
 
     fstrim = {
