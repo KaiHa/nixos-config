@@ -14,6 +14,7 @@
     overlays = [( self: super: rec {
       gnupg = super.gnupg.override { pinentry = pinentry; };
       lbdb = super.lbdb.override { inherit gnupg; goobook = python27Packages.goobook; };
+      pipewire = super.callPackage ./pipewire.nix {};
       # sway = super.sway.overrideAttrs (oldAttrs: rec { separateDebugInfo = true; });
       # wlroots = super.wlroots.overrideAttrs (oldAttrs: rec { separateDebugInfo = true; });
       zathura = super.zathura.override { synctexSupport = false; };
@@ -474,7 +475,7 @@
 
     pcscd.enable = true;
     physlock.enable = true;
-
+    pipewire.enable = false; # TODO XXX
     printing = {
       drivers = [ gutenprint ];
       enable = true;
