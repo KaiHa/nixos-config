@@ -28,33 +28,6 @@
 
 
   systemd = {
-    mounts = [
-      { where = "/media/KAI";
-        what = "192.168.1.1:/mnt/sda1/PRIVATE/KAI";
-        type = "nfs4";
-        options = "";
-        after = ["network-online.target"]; }
-      { where = "/media/PUBLIC";
-        what = "192.168.1.1:/mnt/sda1/PUBLIC";
-        type = "nfs4";
-        options = "";
-        after = ["network-online.target"]; }
-      { where = "/media/PUBLIC_RW";
-        what = "192.168.1.1:/mnt/sda1/PUBLIC_RW";
-        type = "nfs4";
-        options = "";
-        after = ["network-online.target"]; }
-    ];
-
-    automounts = [
-      { wantedBy = ["multi-user.target"];
-        where = "/media/KAI"; }
-      { wantedBy = ["multi-user.target"];
-        where = "/media/PUBLIC"; }
-      { wantedBy = ["multi-user.target"];
-        where = "/media/PUBLIC_RW"; }
-    ];
-
     network = {
       enable = true;
       networks =
