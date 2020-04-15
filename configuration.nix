@@ -460,12 +460,6 @@
     journald.extraConfig = "SystemMaxUse=128M";
     mingetty.autologinUser = "kai";
 
-    nullmailer = {
-      enable = true;
-      config.allmailfrom = "postmaster.rob@gmail.com";
-      remotesFile = "/etc/nullmailer.remotes";
-    };
-
     openssh = {
       enable = true;
       challengeResponseAuthentication = false;
