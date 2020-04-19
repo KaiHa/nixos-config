@@ -91,13 +91,13 @@ with pkgs; {
   };
 
   # Select internationalisation properties.
-  i18n = {
-    consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "us";
-    defaultLocale = "en_US.UTF-8";
-    consoleColors = [ "000000" "dc322f" "859900" "b58900" "268bd2" "d33682"
-                      "2aa198" "eee8d5" "002b36" "cb4b16" "586e75" "657b83"
-                      "839496" "6c71c4" "93a1a1" "fdf6e3" ];
+  i18n.defaultLocale = "en_US.UTF-8";
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "us";
+    colors = [ "000000" "dc322f" "859900" "b58900" "268bd2" "d33682"
+               "2aa198" "eee8d5" "002b36" "cb4b16" "586e75" "657b83"
+               "839496" "6c71c4" "93a1a1" "fdf6e3" ];
   };
 
   sound.enableOSSEmulation = false;
@@ -137,7 +137,7 @@ with pkgs; {
       escapeTime = 0;
       shortcut = "a";
       terminal = "tmux-256color";
-      extraTmuxConf = ''
+      extraConfig = ''
         run-shell ${pkgs.tmuxPlugins.urlview}/share/tmux-plugins/urlview/urlview.tmux
         run-shell ${pkgs.tmuxPlugins.open}/share/tmux-plugins/open/open.tmux
       '';
@@ -161,14 +161,6 @@ with pkgs; {
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDNRoiSl7xkHoHyytkeqhRMeVblZv35Nt8xppfCglFa9LC97fxxDAxoFDK5CTyqRa6PUV1/kD4pLKrP2euhj5GY6m14mvkJxvXpY/SuRN11yp+ATCNC3GeQgTt/jWThhohnZW8OLNXi7lqf6OMIBLUvxajMpqVDCreAU40CYp9E4A+yVTahQCusO/O6ivlURaqqiQ8O0zOCkY5ZPc6KZRoE1VRnX9K7fTL3XrMIPcw27WvSycD9v6cTKSew3eN+SM2BO/AMqaCPpFPegpKpRGK/yrLJwVZTg9YrFav0410ffQ+XvEs7rlVup4eaeeCaWB1tu/mqVxwUFhRkdeDq8vfj JuiceSSH"
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCoUcg4szxfmzmretxXMVXfM6e28yiq+rBJM3tIYVwApJpX40Y5NsVe/MQkz8SOKgfxsSXyOw07e2UIWYg3MnaurM4pQJOMWEdfq8ddelFM7ZP9dL+6DZqCapyMA+6VAHOYaocI7IGVQHBb/W7q1PhPEGQZ50phsfKXArfkDlKMhfwQwzJsNCfinH2x7e/vLg8wL6at/um+lGprt3gkL2nettLNUav6WRK8nqh+Jf3p9VNW59Rp85M4g5XjsP1kCdgFqkapr3nb1lJm9vPW2qzUYh/TgGQ8RNnZCQNI38Rp0O1gAUmNXHUT/gudeRT453n7LRyfroq+qhxL5k9KwJf /home/kai/.ssh/id_kai"
     ];
-  };
-
-  environment = {
-    etc = {
-      "tmpfiles.d/xmonad.conf".text = ''
-        r! /home/kai/.xmonad/xmonad.state
-      '';
-    };
   };
 
   security.apparmor.enable = true;
@@ -205,7 +197,6 @@ with pkgs; {
     };
 
     pcscd.enable = true;
-    physlock.enable = true;
 
     printing = {
       drivers = [ gutenprint ];
@@ -230,19 +221,9 @@ with pkgs; {
     xserver = {
       enable = true;
       layout = "us";
-      displayManager.slim = {
+      displayManager.gdm.enable = true;
+      desktopManager.gnome3 = {
         enable = true;
-        defaultUser = "kai";
-        autoLogin = false;
-        extraConfig = ''
-          sessionstart_cmd    ${xorg.sessreg}/bin/sessreg -a -l tty7 %user
-          sessionstop_cmd     ${xorg.sessreg}/bin/sessreg -d -l tty7 %user
-        '';
-      };
-      desktopManager.default = "none";
-      windowManager = {
-        default = "xmonad";
-        xmonad.enable = true;
       };
     };
   };
@@ -269,6 +250,7 @@ with pkgs; {
     gitAndTools.gitFull
     gnome3.adwaita-icon-theme
     gnome3.dconf
+    gnome3.gnome-tweak-tool
     gnumake
     gnupg
     gparted
