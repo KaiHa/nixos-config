@@ -203,17 +203,7 @@ with pkgs; {
       enable = true;
     };
 
-    dnsmasq = {
-      enable = true;
-      servers = [ "127.0.0.1#53000" ];
-    };
-
-    resolved.enable = false;
-    stubby = {
-      enable = true;
-      listenAddresses = [ "127.0.0.1@53000"
-                          "0::1@53000" ];
-    };
+    resolved.enable = true;
 
     spice-vdagentd.enable = true;
     vnstat.enable = true;
