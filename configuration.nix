@@ -27,7 +27,10 @@ with pkgs; {
     })];
   };
 
-  nix.useSandbox = "relaxed";
+  nix = {
+    maxJobs = 16;
+    useSandbox = "relaxed";
+  };
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "18.09";
