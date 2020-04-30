@@ -282,7 +282,7 @@
 
   virtualisation = {
     libvirtd = {
-      enable = true;
+      enable = false;
       onShutdown = "shutdown";
       qemuPackage = qemu_kvm;
     };
