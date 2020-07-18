@@ -77,6 +77,26 @@ with pkgs; {
       grub.enable = true;
       grub.device = "/dev/sdb";
       grub.useOSProber = true;
+      grub.extraEntries = ''
+          menuentry "Bootable ISO Image: Debian" {
+              insmod part_gpt
+              insmod fat
+              set root='hd0,1'
+              set isofile='/boot/images/debian.iso'
+              loopback loop $isofile
+              linux (loop)/live/vmlinuz boot=live config fromiso=/dev/sdb1/$isofile
+              initrd (loop)/live/initrd.img
+          }
+          menuentry "Bootable ISO Image: Tails" {
+              insmod part_gpt
+              insmod fat
+              set root='hd0,1'
+              set isofile='/boot/images/tails.iso'
+              loopback loop $isofile
+              linux (loop)/live/vmlinuz boot=live config findiso=$isofile apparmor=1 security=apparmor nopersistence noprompt timezone=Etc/UTC block.events_dfl_poll_msecs=1000 noautologin module=Tails slab_nomerge slub_debug=FZP mce=0 vsyscall=none page_poison=1 init_on_alloc=1 init_on_free=1 mds=full,nosmt
+              initrd (loop)/live/initrd.img
+          }
+          '';
     };
     supportedFilesystems = [ "nfs4" ];
   };
