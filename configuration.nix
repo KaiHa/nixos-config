@@ -283,5 +283,6 @@ with pkgs; {
     w3m
     wireshark
     wol
+    zile
   ];
 }
