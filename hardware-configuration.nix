@@ -8,29 +8,25 @@
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
 
-  boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ahci" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
+    { device = "/dev/disk/by-uuid/a7d92d7e-4392-49d8-b7f6-b9654e738fd2";
+      fsType = "btrfs";
+    };
+
+  fileSystems."/media/andante" =
     { device = "/dev/disk/by-uuid/13ac36ca-d9f8-44c0-8cb3-a30a0b98ce9f";
       fsType = "ext4";
     };
 
-  fileSystems."/media/nas" =
-    { device = "systemd-1";
-      fsType = "autofs";
-    };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/3438c591-bafa-491a-8f72-2c9c945f009a";
-      fsType = "ext4";
-    };
-
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/23f63990-46bf-4b21-8c74-f9bd9f9f29bc"; }
-    ];
+  swapDevices = [ { label = "swap"; } ];
 
   nix.maxJobs = lib.mkDefault 16;
-  powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
+  # High-DPI console
+  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 }

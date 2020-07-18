@@ -73,16 +73,17 @@ with pkgs; {
     cleanTmpDir = true;
 
     loader = {
+      timeout = 2;
       grub.enable = true;
-      grub.version = 2;
-      grub.device = "/dev/sda";
+      grub.device = "/dev/sdb";
+      grub.useOSProber = true;
     };
     supportedFilesystems = [ "nfs4" ];
   };
 
 
   fileSystems."/".options     = ["defaults" "noatime" "nodiratime"];
-  fileSystems."/boot".options = ["defaults" "noatime" "nodiratime"];
+
 
   networking = {
     hostName = "c20";
