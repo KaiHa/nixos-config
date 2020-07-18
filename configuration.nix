@@ -130,9 +130,8 @@ with pkgs; {
     chromium.extensions = [ "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
     ];
     command-not-found.enable = true;
-    # Disable gnupg/ssh agent because it conflicts with ssh-agent forwarding
-    #gnupg.agent.enable = true;
-    #gnupg.agent.enableSSHSupport = true;
+    gnupg.agent.enable = true;
+    gnupg.agent.enableSSHSupport = true;
     mosh.enable = true;
     ssh.startAgent = false;
     tmux = {
