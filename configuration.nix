@@ -264,6 +264,7 @@ with pkgs; {
     gnome3.adwaita-icon-theme
     gnome3.dconf
     gnome3.gnome-tweak-tool
+    gnomeExtensions.appindicator
     gnumake
     gnupg
     gparted
