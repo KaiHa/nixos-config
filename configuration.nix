@@ -2,14 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-let
-   not_required_for_online = ''
-     [Link]
-     RequiredForOnline=no
-     '';
-in
-with pkgs; {
+{ config, pkgs, ... }: with pkgs; {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -17,19 +10,17 @@ with pkgs; {
   nixpkgs = {
     config = {
       allowUnfree = true;
-      # chromium.enablePepperFlash = true;
     };
     overlays = [( self: super: rec {
       gnupg = super.gnupg.override { pinentry = pinentry; };
       lbdb = super.lbdb.override { inherit gnupg; goobook = python27Packages.goobook; };
       zathura = super.zathura.override { synctexSupport = false; };
-      linux_4_19 = super.linux_4_19.override { modDirVersion = "4.19.34-hardened"; };
     })];
   };
 
   nix = {
     maxJobs = 16;
-    useSandbox = "relaxed";
+    useSandbox = true;
   };
 
   # The NixOS release to be compatible with for stateful data such as databases.
@@ -40,28 +31,30 @@ with pkgs; {
     network = {
       enable = true;
       networks = {
-        "10-wwp0s20u4i6"= {
-          name = "wwp0s20u4i6";
-          extraConfig = not_required_for_online;
-        };
         "10-ens5" = {
           name = "ens5";
           DHCP = "yes";
         };
-        "11-virbr" = {
-          name = "virbr*";
-          extraConfig = not_required_for_online;
-        };
       };
+    };
+
+    user.services.pulseaudio.environment = {
+      JACK_PROMISCUOUS_SERVER = "jackaudio";
     };
   };
 
   hardware = {
     bluetooth.enable = false;
     cpu.intel.updateMicrocode = true;
+    enableAllFirmware = true;
     enableRedistributableFirmware = true;
     nitrokey.enable = true;
-    pulseaudio.enable = true;
+    opengl.enable = true;
+    pulseaudio = {
+      enable = true;
+      extraModules = [ pulseaudio-modules-bt ];
+      package = pkgs.pulseaudioFull.override { jackaudioSupport = true; };
+    };
   };
 
   powerManagement = {
@@ -71,6 +64,11 @@ with pkgs; {
   boot = {
     kernelPackages = linuxPackages_hardened;
     cleanTmpDir = true;
+    kernelModules = [ "snd-seq" "snd-rawmidi" ];
+
+    kernel.sysctl = {
+      "vm.dirty_writeback_centisecs" = 1500;
+    };
 
     loader = {
       timeout = 2;
@@ -110,8 +108,10 @@ with pkgs; {
     wireless.enable = false;  # Enables wireless support via wpa_supplicant.
     useDHCP = false;  # Provided by networkd
     useNetworkd = true;
-    firewall.allowPing = false;
-    firewall.allowedTCPPorts = [5232];
+    firewall = {
+      allowPing = false;
+      checkReversePath = false;
+    };
   };
 
   # Select internationalisation properties.
@@ -130,6 +130,7 @@ with pkgs; {
   time.timeZone = "Europe/Amsterdam";
 
   fonts = {
+    enableDefaultFonts = true;
     enableFontDir = true;
     enableGhostscriptFonts = true;
     fonts = [
@@ -137,7 +138,10 @@ with pkgs; {
       hack-font
       inconsolata
       liberation_ttf
+      noto-fonts
+      noto-fonts-cjk
       noto-fonts-emoji
+      noto-fonts-extra
       powerline-fonts
       symbola
       ubuntu_font_family
@@ -147,14 +151,23 @@ with pkgs; {
 
   programs = {
     bash.enableCompletion = true;
-    chromium.enable = true;
-    chromium.extensions = [ "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
-    ];
     command-not-found.enable = true;
     gnupg.agent.enable = true;
     gnupg.agent.enableSSHSupport = true;
     mosh.enable = true;
     ssh.startAgent = false;
+    sway = {
+      enable = true;
+      extraPackages = with pkgs; [ dmenu swayidle xwayland ];
+      extraSessionCommands = ''
+           export SDL_VIDEODRIVER=wayland
+           # needs qt5.qtwayland in systemPackages
+           export QT_QPA_PLATFORM=wayland-egl
+           export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+
+           export GDK_BACKEND=wayland
+         '';
+    };
     tmux = {
       enable = true;
       escapeTime = 0;
@@ -166,19 +179,35 @@ with pkgs; {
       '';
     };
     vim.defaultEditor = true;
+    wireshark.enable = true;
+    wireshark.package = wireshark;
     zsh.enable = true;
     zsh.syntaxHighlighting.enable = false;
   };
 
-  virtualisation.libvirtd.enable = true;
-  virtualisation.libvirtd.onShutdown = "shutdown";
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      onShutdown = "shutdown";
+      qemuPackage = qemu_kvm;
+    };
+    # xen.enable = true;
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.extraUsers.kai = {
+  users.users.kai = {
     isNormalUser = true;
     uid = 1000;
     shell = "${zsh}/bin/zsh";
-    extraGroups = [ "wheel" "networkmanager" "nitrokey" "libvirtd" ];
+    extraGroups = [
+      "audio"
+      "jackaudio"
+      "libvirtd"
+      "networkmanager"
+      "nitrokey"
+      "wheel"
+      "wireshark"
+    ];
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCKeT9XLuhzUU4k4gd8URDS3gQIZemTqXSvlVy5nYXJ4gMfJ0sYVMrI9KBBU2Ukkb0Cl8Rmfzblf1iE6IUMrat4Cb9RGIbzjiAzC2XaLUsDC5W87Qv5bgV0t83nWQFjWPWy38Ybjcp8+WuvJNaX9ECc8t+xwtUdVNZ5TszblEqE5wKfOAqJZNGO8uwX2ZY7hOLr9C9a/AM74ouHqR7iDaujMNdLuOA6XmHAnWI6aiA6Lu3NOpGO6UXIudUCIUQ+ymSCCfu99xaAs5aXw/XQLS2f8W8C4q45m/V+uozdqYOK2wrFQlhFa/7TZwi5s3XPeG0d7t5HnxymSIHO7HudP0E7 cardno:00050000351F"
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDNRoiSl7xkHoHyytkeqhRMeVblZv35Nt8xppfCglFa9LC97fxxDAxoFDK5CTyqRa6PUV1/kD4pLKrP2euhj5GY6m14mvkJxvXpY/SuRN11yp+ATCNC3GeQgTt/jWThhohnZW8OLNXi7lqf6OMIBLUvxajMpqVDCreAU40CYp9E4A+yVTahQCusO/O6ivlURaqqiQ8O0zOCkY5ZPc6KZRoE1VRnX9K7fTL3XrMIPcw27WvSycD9v6cTKSew3eN+SM2BO/AMqaCPpFPegpKpRGK/yrLJwVZTg9YrFav0410ffQ+XvEs7rlVup4eaeeCaWB1tu/mqVxwUFhRkdeDq8vfj JuiceSSH"

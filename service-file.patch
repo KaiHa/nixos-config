@@ -1,0 +1,11 @@
+--- a/src/daemon/systemd/user/pipewire.service.in
++++ b/src/daemon/systemd/user/pipewire.service.in
+@@ -17,7 +17,7 @@
+ 
+ [Service]
+ Type=simple
+-ExecStart=@PW_BINARY@
++ExecStart=bash -c "PATH+=@PW_PATH@ @PW_BINARY@"
+ Restart=on-failure
+ 
+ [Install]
