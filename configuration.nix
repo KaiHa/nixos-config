@@ -270,6 +270,7 @@
     };
   };
 
+  environment.homeBinInPath = true;
   environment.systemPackages = with pkgs; [
     adapta-gtk-theme
     alsaUtils
