@@ -222,8 +222,9 @@
     kai ALL = NOPASSWD : /run/current-system/sw/bin/poweroff
     kai ALL = NOPASSWD : /run/current-system/sw/bin/reboot
     '';
+  security.wrappers.spice-client-glib-usb-acl-helper.source = "${pkgs.spice_gtk}/bin/spice-client-glib-usb-acl-helper";
 
-    services = {
+  services = {
 
     dbus = {
       enable = true;
@@ -321,6 +322,7 @@
     quilt
     rsync
     shotwell
+    spice_gtk
     stdenv
     syslinux
     transmission_gtk
